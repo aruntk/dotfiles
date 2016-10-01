@@ -33,7 +33,10 @@ Plugin 'isRuslan/vim-es6'
 Plugin 'scrooloose/nerdcommenter'
 "react jsx syntax
 Plugin 'mxw/vim-jsx'
-
+"Todo List
+Plugin 'jceb/vim-orgmode'
+"graphql
+Plugin 'jparise/vim-graphql'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
