@@ -139,6 +139,12 @@ set backspace=indent,eol,start
 set cursorline "highlight currentline
 hi Normal ctermbg=none
 set wildignore+=.DS_Store
+" Highlight searches
+set hlsearch
+" Ignore case of searches
+"set ignorecase
+" Highlight dynamically as pattern is typed
+set incsearch
 
 " }}}
 
@@ -435,22 +441,25 @@ augroup END
 " }}}
 
 " Syntastic.vim {{{
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['jshint']
-let syntastic_mode_map = { 'passive_filetypes': ['html'] }
-
 augroup syntastic_config
   autocmd!
+
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
+
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+  let g:syntastic_javascript_checkers = ['jshint']
+  let syntastic_mode_map = { 'passive_filetypes': ['html'] }
+
   let g:syntastic_error_symbol = '✗'
   let g:syntastic_warning_symbol = '⚠'
   let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+  nmap <Leader>,] :lnext<C-R>
+  nmap <Leader>,[ :lprev<C-R>
 augroup END
 " }}}
 
