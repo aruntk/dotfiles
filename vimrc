@@ -510,5 +510,3 @@ nmap <CR> o<Esc>
 nmap <leader>/ ,c 
 vmap <leader>/ ,c 
 "}}}
-
-
