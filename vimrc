@@ -22,7 +22,7 @@ Plugin 'kien/ctrlp.vim'
 "Plugin 'wincent/command-t'
 
 "moving cursor
-Plugin 'easymotion/vim-easymotion'
+" Plugin 'easymotion/vim-easymotion'
 
 "align paragraphs
 Plugin 'junegunn/vim-easy-align'
@@ -37,25 +37,27 @@ Plugin 'jceb/vim-orgmode'
 
 "syntax checking plugin
 Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-unimpaired'
+Plugin 'sindresorhus/vim-xo'
+Plugin 'Chiel92/vim-autoformat'
+" Plugin 'tpope/vim-unimpaired'
 
 "Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 "Plugin 'maksimr/vim-jsbeautify'
 "Plugin 'einars/js-beautify'
-Plugin 'groenewege/vim-less'
-Plugin 'ap/vim-css-color'
+" Plugin 'groenewege/vim-less'
+" Plugin 'ap/vim-css-color'
 Plugin 'isRuslan/vim-es6'
 Plugin 'scrooloose/nerdcommenter'
 "react jsx syntax
 Plugin 'mxw/vim-jsx'
 "graphql
-Plugin 'jparise/vim-graphql'
+" Plugin 'jparise/vim-graphql'
 
 " js auto complete
 "Plugin 'ternjs/tern_for_vim'
 "meteor auto complete
-Plugin 'Slava/tern-meteor'
+" Plugin 'Slava/tern-meteor'
 "autocomplete
 "Plugin 'valloric/youcompleteme'
 "Plugin 'Shougo/neocomplete'
@@ -64,16 +66,16 @@ Plugin 'Slava/tern-meteor'
 
 Plugin 'Townk/vim-autoclose'
 " surround something
-Plugin 'tpope/vim-surround'
+" Plugin 'tpope/vim-surround'
 "closes tags while typing
 "Plugin 'alvan/vim-closetag'
 "closes open tags on ctrl+_ shortcut
 Plugin 'docunext/closetag.vim'
 
 "extended % matching
-Plugin 'matchit.zip'
+" Plugin 'matchit.zip'
 "repeating . for plugins
-Plugin 'tpope/vim-repeat'
+" Plugin 'tpope/vim-repeat'
 
 Plugin 'altercation/vim-colors-solarized'
 
@@ -161,6 +163,10 @@ map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeIgnore = ['\.sw']
 " }}}
+"
+"NerdCommenter {{{
+let NERDSpaceDelims=1
+"}}}
 "
 " Local directories {{{
 set backupdir=~/.vim/backups
@@ -274,7 +280,7 @@ augroup general_config
   set tabstop=2
   set expandtab
   "Indentation for WebDevelopment
-  autocmd FileType javascript,html,css,php set ai
+  autocmd FileType javascript,html,css,php set si
   autocmd FileType javascript,html,css,php set sw=2
   autocmd FileType javascript,html,css,php set ts=2
   autocmd FileType javascript,html,css,php set sts=2
@@ -403,6 +409,10 @@ augroup END
 "hi IndentGuidesEven ctermbg=darkgrey
 " }}}
 
+" React settings {{{
+let g:jsx_ext_required = 0
+" }}}
+
 " CtrlP.vim {{{
 augroup ctrlp_config
   autocmd!
@@ -418,13 +428,13 @@ augroup END
 " }}}
 
 " EasyAlign.vim {{{
-augroup easy_align_config
-  autocmd!
-  vmap <Enter> <Plug>(EasyAlign) 
+" augroup easy_align_config
+  " autocmd!
+  " vmap <Enter> <Plug>(EasyAlign) 
   " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-  nmap <Leader>a <Plug>(EasyAlign) 
+  " nmap <Leader>a <Plug>(EasyAlign) 
   " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
-augroup END
+" augroup END
 " }}}
 
 " Airline.vim {{{
@@ -442,7 +452,7 @@ augroup END
 
 " Syntastic.vim {{{
 augroup syntastic_config
-  autocmd!
+autocmd!
 
   set statusline+=%#warningmsg#
   set statusline+=%{SyntasticStatuslineFlag()}
@@ -451,18 +461,26 @@ augroup syntastic_config
   let g:syntastic_always_populate_loc_list = 1
   let g:syntastic_auto_loc_list = 1
   let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-  let g:syntastic_javascript_checkers = ['jshint']
+  let g:syntastic_check_on_wq = 1
+  let g:syntastic_mode_map = { "mode": "passive" }
+  " let g:syntastic_javascript_xo_args="--space"
+  let g:syntastic_javascript_checkers = ['eslint']
+  map <C-f> :SyntasticCheck<cr>
   let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
   let g:syntastic_error_symbol = '✗'
   let g:syntastic_warning_symbol = '⚠'
   let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-  nmap <Leader>,] :lnext<C-R>
-  nmap <Leader>,[ :lprev<C-R>
+  "map <c-f> :Esformatter<cr>
+  autocmd FileType javascript noremap <buffer>  <c-f> :Esformatter<cr>
+  nmap <Leader>] :lnext<CR>
+  nmap <Leader>[ :lprev<CR>
 augroup END
 " }}}
-
+" autoformat {{{
+let g:formatdef_xo = '"xo --fix --stdin"'
+let g:formatters_javascript = ['xo']
+"}}}
 "youcompleteme {{{
 "let g:spf13_no_omni_complete = 1
 " }}}
