@@ -7,107 +7,115 @@ filetype off                  " required
 
 " Load plugins {{{
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
+" Plug conditions {{{
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+"}}}
+call plug#begin('~/.local/share/nvim/plugged')
+"alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'VundleVim/Vundle.vim'
 
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 
 "search
-Plugin 'kien/ctrlp.vim'
-"Plugin 'wincent/command-t'
+Plug 'kien/ctrlp.vim'
+"Plug 'wincent/command-t'
 
 "moving cursor
-" Plugin 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 
 "align paragraphs
-Plugin 'junegunn/vim-easy-align'
-"Plugin 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
+"Plug 'godlygeek/tabular'
 "visually displaying indent levels
-"Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'Yggdroot/indentLine'
+"Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 
 "Todo List
-Plugin 'plasticboy/vim-markdown'
-Plugin 'jceb/vim-orgmode'
+Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
+Plug 'jceb/vim-orgmode', { 'for': ['markdown'] }
 
 "syntax checking plugin
-Plugin 'scrooloose/syntastic'
-Plugin 'sindresorhus/vim-xo'
-Plugin 'Chiel92/vim-autoformat'
-" Plugin 'tpope/vim-unimpaired'
+Plug 'benekastah/neomake', Cond(has('nvim'), { 'on': 'Neomake' })
+Plug 'scrooloose/syntastic', Cond(has('vim'))
+" Plug 'sindresorhus/vim-xo'
+Plug 'Chiel92/vim-autoformat'
+" Plug 'tpope/vim-unimpaired'
 
-"Plugin 'jelera/vim-javascript-syntax'
-Plugin 'pangloss/vim-javascript'
-"Plugin 'maksimr/vim-jsbeautify'
-"Plugin 'einars/js-beautify'
-" Plugin 'groenewege/vim-less'
-" Plugin 'ap/vim-css-color'
-Plugin 'isRuslan/vim-es6'
-Plugin 'scrooloose/nerdcommenter'
+"Plug 'jelera/vim-javascript-syntax'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'html', 'jsx'] }
+"Plug 'maksimr/vim-jsbeautify'
+"Plug 'einars/js-beautify'
+" Plug 'groenewege/vim-less'
+" Plug 'ap/vim-css-color'
+Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'html', 'jsx'] }
+Plug 'scrooloose/nerdcommenter'
 "react jsx syntax
-Plugin 'mxw/vim-jsx'
+Plug 'mxw/vim-jsx', { 'for': ['jsx'] }
+" Plug 'webdesus/polymer-ide.vim', { 'for': 'html' }
+Plug 'tomlion/vim-solidity', { 'for': ['solidity'] }
 "graphql
-" Plugin 'jparise/vim-graphql'
+" Plug 'jparise/vim-graphql'
 
 " js auto complete
-"Plugin 'ternjs/tern_for_vim'
+"Plug 'ternjs/tern_for_vim'
 "meteor auto complete
-" Plugin 'Slava/tern-meteor'
+" Plug 'Slava/tern-meteor'
 "autocomplete
-"Plugin 'valloric/youcompleteme'
-"Plugin 'Shougo/neocomplete'
-"Plugin 'Shougo/neosnippet'
-"Plugin 'Shougo/neosnippet-snippets'
+"Plug 'valloric/youcompleteme'
+"Plug 'Shougo/neocomplete'
+"Plug 'Shougo/neosnippet'
+"Plug 'Shougo/neosnippet-snippets'
 
-Plugin 'Townk/vim-autoclose'
+Plug 'Townk/vim-autoclose'
 " surround something
-" Plugin 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
 "closes tags while typing
-"Plugin 'alvan/vim-closetag'
+"Plug 'alvan/vim-closetag'
 "closes open tags on ctrl+_ shortcut
-Plugin 'docunext/closetag.vim'
+Plug 'docunext/closetag.vim'
 
 "extended % matching
-" Plugin 'matchit.zip'
+" Plug 'matchit.zip'
 "repeating . for plugins
-" Plugin 'tpope/vim-repeat'
+" Plug 'tpope/vim-repeat'
 
-Plugin 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
-"Plugin 'Shougo/vimshell.vim'
-"Plugin 'Shougo/vimproc.vim'
+"Plug 'Shougo/vimshell.vim'
+"Plug 'Shougo/vimproc.vim'
 
-"Plugin 'itchyny/lightline.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+"Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 "Session management
-Plugin 'tpope/vim-obsession'
+Plug 'tpope/vim-obsession'
 
 " The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
+" Keep Plug commands between plugbegin/end.
 " plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
+" Plug 'L9'
 " Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
+" Plug 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
+" Plug 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
+" Plug 'user/L9', {'name': 'newL9'}
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end() "required
 "  }}}
 
 "filetype plugin on
@@ -120,8 +128,6 @@ call vundle#end()            " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-
 " Defaults + Colors and stuff {{{
 set clipboard=unnamed
 set noshowmode " Don't show the current mode (airline.vim takes care of us)
@@ -274,7 +280,7 @@ augroup general_config
   "}}}
 
   "Indentation {{{
-  " by default, the indent is 2 spaces. 
+  " by default, the indent is 2 spaces.
   set shiftwidth=2
   set softtabstop=2
   set tabstop=2
@@ -430,9 +436,9 @@ augroup END
 " EasyAlign.vim {{{
 " augroup easy_align_config
   " autocmd!
-  " vmap <Enter> <Plug>(EasyAlign) 
+  " vmap <Enter> <Plug>(EasyAlign)
   " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-  " nmap <Leader>a <Plug>(EasyAlign) 
+  " nmap <Leader>a <Plug>(EasyAlign)
   " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
 " augroup END
 " }}}
@@ -441,7 +447,7 @@ augroup END
 augroup airline_config
   autocmd!
   let g:airline_powerline_fonts = 1
-  let g:airline_enable_syntastic = 1
+  " let g:airline_enable_syntastic = 1
   let g:airline#extensions#tabline#buffer_nr_format = '%s '
   let g:airline#extensions#tabline#buffer_nr_show = 1
   let g:airline#extensions#tabline#enabled = 1
@@ -450,6 +456,31 @@ augroup airline_config
 augroup END
 " }}}
 
+if has('nvim')
+let g:neomake_javascript_enabled_makers = ['eslint']
+autocmd! BufWritePost,BufEnter * Neomake
+autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+      \   q :cclose<cr>:lclose<cr>
+autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+      \   bd|
+      \   q | endif
+let g:neomake_open_list = 2
+
+" move to next error
+nmap <Leader>] :lnext<CR>
+" move to previous error.
+nmap <Leader>[ :lprev<CR>
+
+let g:neomake_warning_sign = {
+  \ 'text': '?',
+  \ 'texthl': 'WarningMsg',
+  \ }
+let g:neomake_error_sign = {
+  \ 'text': '✗',
+  \ 'texthl': 'WarningMsg',
+  \ }
+endif
+if has('vim')
 " Syntastic.vim {{{
 augroup syntastic_config
 autocmd!
@@ -462,7 +493,7 @@ autocmd!
   let g:syntastic_auto_loc_list = 1
   let g:syntastic_check_on_open = 1
   let g:syntastic_check_on_wq = 1
-  let g:syntastic_mode_map = { "mode": "passive" }
+  let g:syntastic_mode_map = { 'mode': 'passive' }
   " let g:syntastic_javascript_xo_args="--space"
   let g:syntastic_javascript_checkers = ['eslint']
   map <C-f> :SyntasticCheck<cr>
@@ -477,9 +508,11 @@ autocmd!
   nmap <Leader>[ :lprev<CR>
 augroup END
 " }}}
+endif
+"
 " autoformat {{{
-let g:formatdef_xo = '"xo --fix --stdin"'
-let g:formatters_javascript = ['xo']
+" let g:formatdef_xo = '"xo --fix --stdin"'
+" let g:formatters_javascript = ['xo']
 "}}}
 "youcompleteme {{{
 "let g:spf13_no_omni_complete = 1
@@ -499,6 +532,12 @@ let g:formatters_javascript = ['xo']
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 " }}}
 
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+noremap <leader>w :call DeleteTrailingWS()<CR>
 
 " MarkDown config {{{
 function! MarkdownLevel()
@@ -520,11 +559,19 @@ function! MarkdownLevel()
   if getline(v:lnum) =~ '^###### .*$'
     return ">6"
   endif
-  return "=" 
+  return "="
 endfunction
-au BufEnter *.md setlocal foldexpr=MarkdownLevel()  
-au BufEnter *.md setlocal foldmethod=expr 
-nmap <CR> o<Esc>
-nmap <leader>/ ,c 
-vmap <leader>/ ,c 
+au BufEnter *.md setlocal foldexpr=MarkdownLevel()
+au BufEnter *.md setlocal foldmethod=expr
+function! NewlineEnter()
+  if &buftype ==# 'quickfix'
+    execute "normal! \<CR>"
+  else
+    normal! o
+  endif
+endfunction
+" enter to new line if not in quickfix window
+nnoremap <CR> :call NewlineEnter()<CR>
+nmap <leader>/ ,c
+vmap <leader>/ ,c
 "}}}
