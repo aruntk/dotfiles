@@ -41,22 +41,25 @@ Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
 Plug 'jceb/vim-orgmode', { 'for': ['markdown'] }
 
 "syntax checking plugin
-Plug 'benekastah/neomake', Cond(has('nvim'), { 'on': 'Neomake' })
-Plug 'scrooloose/syntastic', Cond(has('vim'))
+Plug 'neomake/neomake', Cond(has('nvim'), { 'on': 'Neomake' })
+" Plug 'scrooloose/syntastic', Cond(has('vim'))
+Plug 'scrooloose/syntastic'
 " Plug 'sindresorhus/vim-xo'
 Plug 'Chiel92/vim-autoformat'
 " Plug 'tpope/vim-unimpaired'
 
 "Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'html', 'jsx'] }
+Plug 'pangloss/vim-javascript'
 "Plug 'maksimr/vim-jsbeautify'
 "Plug 'einars/js-beautify'
 " Plug 'groenewege/vim-less'
 " Plug 'ap/vim-css-color'
-Plug 'isRuslan/vim-es6', { 'for': ['javascript', 'html', 'jsx'] }
+Plug 'isRuslan/vim-es6'
 Plug 'scrooloose/nerdcommenter'
 "react jsx syntax
-Plug 'mxw/vim-jsx', { 'for': ['jsx'] }
+Plug 'mxw/vim-jsx'
+"react styled jsx <style jsx>
+Plug 'alampros/vim-styled-jsx'
 " Plug 'webdesus/polymer-ide.vim', { 'for': 'html' }
 Plug 'tomlion/vim-solidity', { 'for': ['solidity'] }
 "graphql
@@ -85,6 +88,9 @@ Plug 'docunext/closetag.vim'
 "repeating . for plugins
 " Plug 'tpope/vim-repeat'
 
+" Case operations
+Plug 'tpope/vim-abolish'
+
 Plug 'altercation/vim-colors-solarized'
 
 "Plug 'Shougo/vimshell.vim'
@@ -101,7 +107,9 @@ Plug 'tpope/vim-obsession'
 " The following are examples of different formats supported.
 " Keep Plug commands between plugbegin/end.
 " plugin on GitHub repo
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
+" git diff in the gutter
+Plug 'airblade/vim-gitgutter'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plug 'L9'
 " Git plugin not hosted on GitHub
@@ -205,6 +213,18 @@ augroup general_config
   augroup END
   "}}}
 
+" EVIL MODE {{{
+" noremap <Up> <NOP>
+" noremap <Down> <NOP>
+" noremap <Left> <NOP>
+" noremap <Right> <NOP>
+
+" inoremap <Up> <NOP>
+" inoremap <Down> <NOP>
+" inoremap <Left> <NOP>
+" inoremap <Right> <NOP>
+" }}}
+
   " Allow us to use Ctrl-s and Ctrl-q as keybinds {{{
   silent !stty -ixon
   " Keymaps for saving using ctrl+s
@@ -214,6 +234,9 @@ augroup general_config
 
   "}}}
 
+  "replace selected text in visual mode {{{
+  vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+  "}}}
 
   "autocomplete path {{{
   imap <S-Tab> <C-X><C-F>
@@ -286,7 +309,7 @@ augroup general_config
   set tabstop=2
   set expandtab
   "Indentation for WebDevelopment
-  autocmd FileType javascript,html,css,php set si
+  autocmd FileType javascript,html,css,php set ai
   autocmd FileType javascript,html,css,php set sw=2
   autocmd FileType javascript,html,css,php set ts=2
   autocmd FileType javascript,html,css,php set sts=2
@@ -447,7 +470,7 @@ augroup END
 augroup airline_config
   autocmd!
   let g:airline_powerline_fonts = 1
-  " let g:airline_enable_syntastic = 1
+  let g:airline_enable_syntastic = 1
   let g:airline#extensions#tabline#buffer_nr_format = '%s '
   let g:airline#extensions#tabline#buffer_nr_show = 1
   let g:airline#extensions#tabline#enabled = 1
@@ -456,6 +479,7 @@ augroup airline_config
 augroup END
 " }}}
 
+" Neomake {{{
 if has('nvim')
 let g:neomake_javascript_enabled_makers = ['eslint']
 autocmd! BufWritePost,BufEnter * Neomake
@@ -464,7 +488,11 @@ autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
 autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
       \   bd|
       \   q | endif
-let g:neomake_open_list = 2
+" to open qf
+" let g:neomake_open_list = 2
+" to highlight lines
+" let g:neomake_highlight_lines = 1
+" let g:neomake_list_height = 2
 
 " move to next error
 nmap <Leader>] :lnext<CR>
@@ -480,6 +508,7 @@ let g:neomake_error_sign = {
   \ 'texthl': 'WarningMsg',
   \ }
 endif
+" }}}
 if has('vim')
 " Syntastic.vim {{{
 augroup syntastic_config
@@ -493,7 +522,7 @@ autocmd!
   let g:syntastic_auto_loc_list = 1
   let g:syntastic_check_on_open = 1
   let g:syntastic_check_on_wq = 1
-  let g:syntastic_mode_map = { 'mode': 'passive' }
+  let g:syntastic_mode_map = { "mode": "passive" }
   " let g:syntastic_javascript_xo_args="--space"
   let g:syntastic_javascript_checkers = ['eslint']
   map <C-f> :SyntasticCheck<cr>
