@@ -42,14 +42,39 @@ Plug 'jceb/vim-orgmode', { 'for': ['markdown'] }
 
 "syntax checking plugin
 Plug 'neomake/neomake', Cond(has('nvim'))
-Plug 'scrooloose/syntastic', Cond(has('vim'))
+" Plug 'scrooloose/syntastic', Cond(has('vim'))
 " Plug 'scrooloose/syntastic'
 " Plug 'sindresorhus/vim-xo'
 Plug 'Chiel92/vim-autoformat'
 " Plug 'tpope/vim-unimpaired'
 
+
+" js auto complete
+"Plug 'ternjs/tern_for_vim'
+"meteor auto complete
+" Plug 'Slava/tern-meteor'
+"autocomplete
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+"Plug 'valloric/youcompleteme'
+"Plug 'Shougo/neocomplete'
+"Plug 'Shougo/neosnippet'
+"Plug 'Shougo/neosnippet-snippets'
+
+
 "Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript'
+Plug 'herringtondarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'ianks/vim-tsx'
+" Plug 'quramy/tsuquyomi'
 "Plug 'maksimr/vim-jsbeautify'
 "Plug 'einars/js-beautify'
 " Plug 'groenewege/vim-less'
@@ -60,21 +85,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mxw/vim-jsx'
 "react styled jsx <style jsx>
 " Plug 'alampros/vim-styled-jsx'
-Plug 'styled-components/vim-styled-components'
+" Plug 'styled-components/vim-styled-components', { 'for': ['jsx', 'tsx'] }
 " Plug 'webdesus/polymer-ide.vim', { 'for': 'html' }
-Plug 'tomlion/vim-solidity', { 'for': ['solidity'] }
+" Plug 'tomlion/vim-solidity', { 'for': ['solidity'] }
 "graphql
 " Plug 'jparise/vim-graphql'
-
-" js auto complete
-"Plug 'ternjs/tern_for_vim'
-"meteor auto complete
-" Plug 'Slava/tern-meteor'
-"autocomplete
-"Plug 'valloric/youcompleteme'
-"Plug 'Shougo/neocomplete'
-"Plug 'Shougo/neosnippet'
-"Plug 'Shougo/neosnippet-snippets'
 
 Plug 'Townk/vim-autoclose'
 " surround something
@@ -302,6 +317,27 @@ augroup general_config
   nnoremap <leader>l :call NumberToggle()<cr>
 
   "}}}
+  "
+  "{{{ typescript tsx autocomplete
+  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+  if exists('b:current_syntax')
+    let s:current_syntax=b:current_syntax
+    unlet b:current_syntax
+  endif
+  syn include @HTMLSyntax syntax/html.vim
+  if exists('s:current_syntax')
+    let b:current_syntax=s:current_syntax
+  endif
+
+  syn region typescriptTemplateString contains=@HTMLSyntax,typescriptTemplateSubstitution
+        \ containedin=typescriptTemplate,javascriptTemplate
+        \ start=+\%(<\|\w\)\@<!<\z([a-zA-Z][a-zA-Z0-9:\-.]*\)+
+        \ skip=+<!--\_.\{-}-->+
+        \ end=+</\z1\_\s\{-}>+
+        \ end=+/>+
+        \ keepend
+        \ extend
+  "}}}
 
   "Indentation {{{
   " by default, the indent is 2 spaces.
@@ -314,8 +350,12 @@ augroup general_config
   autocmd FileType javascript,html,css,php set sw=2
   autocmd FileType javascript,html,css,php set ts=2
   autocmd FileType javascript,html,css,php set sts=2
+  " disable typescript indentation
+  let g:typescript_indent_disable = 1
   "autocmd FileType javascript,css,php set textwidth=79
   "}}}
+  " deoplete autocomplete
+  let g:deoplete#enable_at_startup = 1
 
   " Strip trailing whitespace (,ss) {{{
   function! StripWhitespace () " {{{
