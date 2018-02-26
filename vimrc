@@ -24,6 +24,7 @@ Plug 'scrooloose/nerdtree'
 
 "search
 Plug 'kien/ctrlp.vim'
+Plug 'mileszs/ack.vim'
 "Plug 'wincent/command-t'
 
 "moving cursor
@@ -37,23 +38,12 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Yggdroot/indentLine'
 
 "Todo List
-Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
-Plug 'jceb/vim-orgmode', { 'for': ['markdown'] }
+" Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
+" Plug 'jceb/vim-orgmode', { 'for': ['markdown'] }
 
 "syntax checking plugin
-Plug 'neomake/neomake', Cond(has('nvim'))
-" Plug 'scrooloose/syntastic', Cond(has('vim'))
-" Plug 'scrooloose/syntastic'
-" Plug 'sindresorhus/vim-xo'
-Plug 'Chiel92/vim-autoformat'
-" Plug 'tpope/vim-unimpaired'
+Plug 'w0rp/ale'
 
-
-" js auto complete
-"Plug 'ternjs/tern_for_vim'
-"meteor auto complete
-" Plug 'Slava/tern-meteor'
-"autocomplete
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -70,16 +60,22 @@ endif
 
 "Plug 'jelera/vim-javascript-syntax'
 Plug 'pangloss/vim-javascript'
-Plug 'herringtondarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'ianks/vim-tsx'
+Plug 'isRuslan/vim-es6'
 " Plug 'quramy/tsuquyomi'
-"Plug 'maksimr/vim-jsbeautify'
+Plug 'herringtondarkholme/yats.vim'
+" Plug 'mhartington/nvim-typescript'
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'sbdchd/neoformat'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'peitalin/vim-jsx-typescript'
+Plug 'maxmellon/vim-jsx-pretty'
+" Plug 'ianks/vim-tsx'
+" Plug 'Quramy/vim-js-pretty-template'
+" Plug 'jason0x43/vim-js-indent'
+" Plug 'maksimr/vim-jsbeautify'
 "Plug 'einars/js-beautify'
 " Plug 'groenewege/vim-less'
 " Plug 'ap/vim-css-color'
-Plug 'isRuslan/vim-es6'
 Plug 'scrooloose/nerdcommenter'
 "react jsx syntax
 Plug 'mxw/vim-jsx'
@@ -206,6 +202,21 @@ set undodir=~/.vim/undo
 "}}}
 
 
+" Ignore {{{
+set wildignore+=.DS_Store
+set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.gif,*.psd,*.o,*.obj,*.min.js
+set wildignore+=*/bower_components/*,*/node_modules/*
+set wildignore+=*/smarty/*,*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,*/log/*,*/tmp/*,*/build/*,*/ckeditor/*,*/doc/*,*/source_maps/*,*/dist/*
+" }}}
+"
+" Hard to type things {{{
+  iabbrev >> →
+  iabbrev << ←
+  iabbrev ^^ ↑
+  iabbrev VV ↓
+  iabbrev aa λ
+  " }}}
+  "
 " General {{{
 augroup general_config
   autocmd!
@@ -229,17 +240,17 @@ augroup general_config
   augroup END
   "}}}
 
-" EVIL MODE {{{
-" noremap <Up> <NOP>
-" noremap <Down> <NOP>
-" noremap <Left> <NOP>
-" noremap <Right> <NOP>
+  " EVIL MODE {{{
+  " noremap <Up> <NOP>
+  " noremap <Down> <NOP>
+  " noremap <Left> <NOP>
+  " noremap <Right> <NOP>
 
-" inoremap <Up> <NOP>
-" inoremap <Down> <NOP>
-" inoremap <Left> <NOP>
-" inoremap <Right> <NOP>
-" }}}
+  " inoremap <Up> <NOP>
+  " inoremap <Down> <NOP>
+  " inoremap <Left> <NOP>
+  " inoremap <Right> <NOP>
+  " }}}
 
   " Allow us to use Ctrl-s and Ctrl-q as keybinds {{{
   silent !stty -ixon
@@ -248,6 +259,8 @@ augroup general_config
   vnoremap <silent> <C-S> <C-C>:update<CR>
   inoremap <silent> <C-S> <C-O>:update<CR><C-C>
 
+  " No need for ex mode
+  nnoremap Q <nop>
   "}}}
 
   "replace selected text in visual mode {{{
@@ -276,16 +289,114 @@ augroup general_config
   nnoremap <leader>p :CtrlPBuffer<CR>
   vnoremap <leader>p :CtrlPBuffer<CR>
 
+" Clear last search (,qs) {{{
+  map <silent> <leader>qs <Esc>:noh<CR>
+  " map <silent> <leader>qs <Esc>:let @/ = ""<CR>
+  " }}}
+
+  " Search and replace word under cursor (,*) {{{
+  nnoremap <leader>* :%s/\<<C-r><C-w>\>//<Left>
+  vnoremap <leader>* "hy:%s/\V<C-r>h//<left>
+  " }}}
 
   " Tab movements
-  nnoremap <leader>m :tabn<CR>
-  nnoremap <leader>n :tabp<CR>
+  " nnoremap <leader>m :tabn<CR>
+  " nnoremap <leader>n :tabp<CR>
 
   " For listing buffers
   nnoremap <leader>b :buffers<CR>
 
   "}}}
 
+ " Yank from cursor to end of line {{{
+  nnoremap Y y$
+  " }}}
+  "
+ " Join lines and restore cursor location (J) {{{
+  nnoremap J mjJ`j
+  " }}}
+
+" Highlight Interesting Words {{{
+augroup highlight_interesting_word
+  autocmd!
+  " This mini-plugin provides a few mappings for highlighting words temporarily.
+  "
+  " Sometimes you're looking at a hairy piece of code and would like a certain
+  " word or two to stand out temporarily.  You can search for it, but that only
+  " gives you one color of highlighting.  Now you can use <leader>N where N is
+  " a number from 1-6 to highlight the current word in a specific color.
+  function! HiInterestingWord(n) " {{{
+    " Save our location.
+    normal! mz
+
+    " Yank the current word into the z register.
+    normal! "zyiw
+
+    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+    let mid = 86750 + a:n
+
+    " Clear existing matches, but don't worry if they don't exist.
+    silent! call matchdelete(mid)
+
+    " Construct a literal pattern that has to match at boundaries.
+    let pat = '\V\<' . escape(@z, '\') . '\>'
+
+    " Actually match the words.
+    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+
+    " Move back to our original location.
+    normal! `z
+  endfunction " }}}
+
+  " Mappings {{{
+  nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+  nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+  nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+  nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+  nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+  nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+  " }}}
+
+  " Default Highlights {{{
+  hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+  hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+  hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
+  hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+  hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+  hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+  " }}}
+augroup END
+" }}}
+
+" Word Processor Mode {{{
+augroup word_processor_mode
+  autocmd!
+
+  function! WordProcessorMode() " {{{
+    setlocal formatoptions=t1
+    map j gj
+    map k gk
+    setlocal smartindent
+    setlocal spell spelllang=en_ca
+    setlocal noexpandtab
+    setlocal wrap
+    setlocal linebreak
+    Goyo 100
+  endfunction " }}}
+  com! WP call WordProcessorMode()
+augroup END
+" }}}
+
+" Restore Cursor Position {{{
+augroup restore_cursor
+  autocmd!
+
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+augroup END
+" }}}
   " space open/closes folds
   "set foldmethod=indent
   "nnoremap <space> za
@@ -293,9 +404,6 @@ augroup general_config
   "
 
 
-  " Switch File Type
-
-  map <leader>s :execute "set syntax=htmlm4"<CR>
 
   "Set html files syntax as htmlm4
   "au BufRead *.html set syntax=htmlm4
@@ -318,25 +426,42 @@ augroup general_config
 
   "}}}
   "
-  "{{{ typescript tsx autocomplete
-  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
-  if exists('b:current_syntax')
-    let s:current_syntax=b:current_syntax
-    unlet b:current_syntax
-  endif
-  syn include @HTMLSyntax syntax/html.vim
-  if exists('s:current_syntax')
-    let b:current_syntax=s:current_syntax
-  endif
+  "{{{ ale config syntax checking and fixing
+  let g:ale_fixers = {}
+  let g:ale_fixers['typescript'] = ['tsc', 'tslint']
+  let g:ale_fix_on_save = 0
+  let g:ale_completion_enabled = 1
+  let g:ale_linters = {'jsx': ['stylelint', 'tslint']}
+  let g:ale_linter_aliases = {'jsx': 'css'}
 
-  syn region typescriptTemplateString contains=@HTMLSyntax,typescriptTemplateSubstitution
-        \ containedin=typescriptTemplate,javascriptTemplate
-        \ start=+\%(<\|\w\)\@<!<\z([a-zA-Z][a-zA-Z0-9:\-.]*\)+
-        \ skip=+<!--\_.\{-}-->+
-        \ end=+</\z1\_\s\{-}>+
-        \ end=+/>+
-        \ keepend
-        \ extend
+  " Set this. Airline will handle the rest.
+  let g:airline#extensions#ale#enabled = 1
+  let g:ale_sign_error = '✗'
+  let g:ale_sign_warning = '?'
+
+  nnoremap <leader>] :lnext<CR>
+  nnoremap <leader>[ :lprevious<CR>
+  " disable space = cursor movement
+  nnoremap <space> <Nop>
+  vnoremap <space> <Nop>
+  nnoremap <space>[ :lrewind<CR>
+  nnoremap <space>d :ALEGoToDefinition<CR>
+  nnoremap <space>F :ALEFix<CR>
+  nnoremap <space>f :ALEDetail<CR>
+  "}}}
+  "
+  "
+  "{{{ typescript tsx autocomplete
+  " set filetypes as typescript.jsx
+  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+  " autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
+  " colors
+  " light blues
+  " hi xmlTagName guifg=#59ACE5
+  " hi xmlTag guifg=#59ACE5
+
+  " dark blues
+  " hi xmlEndTag guifg=#2974a1
   "}}}
 
   "Indentation {{{
@@ -346,12 +471,13 @@ augroup general_config
   set tabstop=2
   set expandtab
   "Indentation for WebDevelopment
-  autocmd FileType javascript,html,css,php set ai
-  autocmd FileType javascript,html,css,php set sw=2
-  autocmd FileType javascript,html,css,php set ts=2
-  autocmd FileType javascript,html,css,php set sts=2
+  autocmd FileType jsx,typescript,javascript,html,css,php set ai
+  autocmd FileType jsx,typescript,javascript,html,css,php set sw=2
+  autocmd FileType jsx,typescript,javascript,html,css,php set ts=2
+  autocmd FileType jsx,typescript,javascript,html,css,php set sts=2
+  let g:neoformat_enabled_typescript = ['prettier']
   " disable typescript indentation
-  let g:typescript_indent_disable = 1
+  " let g:typescript_indent_disable = 1
   "autocmd FileType javascript,css,php set textwidth=79
   "}}}
   " deoplete autocomplete
@@ -468,7 +594,7 @@ augroup END
 " Markdown {{{
 augroup filetype_markdown
   autocmd!
-  let g:markdown_fenced_languages = ['ruby', 'html', 'javascript', 'css', 'erb=eruby.html', 'bash=sh']
+  let g:markdown_fenced_languages = ['ruby', 'html', 'javascript', 'css', 'erb=eruby.html', 'bash=sh', 'typescript']
 augroup END
 " }}}
 
@@ -499,11 +625,11 @@ augroup END
 
 " EasyAlign.vim {{{
 " augroup easy_align_config
-  " autocmd!
-  " vmap <Enter> <Plug>(EasyAlign)
-  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-  " nmap <Leader>a <Plug>(EasyAlign)
-  " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+" autocmd!
+" vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+" nmap <Leader>a <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
 " augroup END
 " }}}
 
@@ -511,7 +637,7 @@ augroup END
 augroup airline_config
   autocmd!
   let g:airline_powerline_fonts = 1
-  let g:airline_enable_syntastic = 1
+  " let g:airline_enable_syntastic = 1
   let g:airline#extensions#tabline#buffer_nr_format = '%s '
   let g:airline#extensions#tabline#buffer_nr_show = 1
   let g:airline#extensions#tabline#enabled = 1
@@ -520,87 +646,12 @@ augroup airline_config
 augroup END
 " }}}
 
-" Neomake {{{
-if has('nvim')
-let g:neomake_javascript_enabled_makers = ['eslint']
-autocmd! BufWritePost,BufEnter * Neomake
-autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-      \   q :cclose<cr>:lclose<cr>
-autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-      \   bd|
-      \   q | endif
-" to open qf
-" let g:neomake_open_list = 2
-" to highlight lines
-" let g:neomake_highlight_lines = 1
-" let g:neomake_list_height = 2
-
-" move to next error
-nmap <Leader>] :lnext<CR>
-" move to previous error.
-nmap <Leader>[ :lprev<CR>
-
-let g:neomake_warning_sign = {
-  \ 'text': '?',
-  \ 'texthl': 'WarningMsg',
-  \ }
-let g:neomake_error_sign = {
-  \ 'text': '✗',
-  \ 'texthl': 'WarningMsg',
-  \ }
-endif
-" }}}
-if has('vim')
-" Syntastic.vim {{{
-augroup syntastic_config
-autocmd!
-
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 1
-  let g:syntastic_mode_map = { "mode": "passive" }
-  " let g:syntastic_javascript_xo_args="--space"
-  let g:syntastic_javascript_checkers = ['eslint']
-  map <C-f> :SyntasticCheck<cr>
-  let syntastic_mode_map = { 'passive_filetypes': ['html'] }
-
-  let g:syntastic_error_symbol = '✗'
-  let g:syntastic_warning_symbol = '⚠'
-  let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-  "map <c-f> :Esformatter<cr>
-  autocmd FileType javascript noremap <buffer>  <c-f> :Esformatter<cr>
-  nmap <Leader>] :lnext<CR>
-  nmap <Leader>[ :lprev<CR>
-augroup END
-" }}}
-endif
-"
-" autoformat {{{
-" let g:formatdef_xo = '"xo --fix --stdin"'
-" let g:formatters_javascript = ['xo']
-"}}}
-"youcompleteme {{{
-"let g:spf13_no_omni_complete = 1
-" }}}
-
-" My PowerLine Configs {{{
-
-"source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
-"set laststatus=2
-"let g:Powerline_symbols = 'fancy'
-"set fillchars+=stl:\ ,stlnc:\
-
-" }}}
 
 "Close Tag {{{
 "# filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 " }}}
+
 
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -649,65 +700,65 @@ vmap <leader>/ ,c
 "{{{
 " BufOnly.vim  -  Delete all the buffers except the current/named buffer.
 "
-" :Bonly / :BOnly / :Bufonly / :BufOnly [buffer] 
+" :Bonly / :BOnly / :Bufonly / :BufOnly [buffer]
 "
 " Without any arguments the current buffer is kept.  With an argument the
 " buffer name/number supplied is kept.
 
 command! -nargs=? -complete=buffer -bang Bonly
-    \ :call BufOnly('<args>', '<bang>')
+      \ :call BufOnly('<args>', '<bang>')
 command! -nargs=? -complete=buffer -bang BOnly
-    \ :call BufOnly('<args>', '<bang>')
+      \ :call BufOnly('<args>', '<bang>')
 command! -nargs=? -complete=buffer -bang Bufonly
-    \ :call BufOnly('<args>', '<bang>')
+      \ :call BufOnly('<args>', '<bang>')
 command! -nargs=? -complete=buffer -bang BufOnly
-    \ :call BufOnly('<args>', '<bang>')
+      \ :call BufOnly('<args>', '<bang>')
 
 function! BufOnly(buffer, bang)
-	if a:buffer == ''
-		" No buffer provided, use the current buffer.
-		let buffer = bufnr('%')
-	elseif (a:buffer + 0) > 0
-		" A buffer number was provided.
-		let buffer = bufnr(a:buffer + 0)
-	else
-		" A buffer name was provided.
-		let buffer = bufnr(a:buffer)
-	endif
+  if a:buffer == ''
+    " No buffer provided, use the current buffer.
+    let buffer = bufnr('%')
+  elseif (a:buffer + 0) > 0
+    " A buffer number was provided.
+    let buffer = bufnr(a:buffer + 0)
+  else
+    " A buffer name was provided.
+    let buffer = bufnr(a:buffer)
+  endif
 
-	if buffer == -1
-		echohl ErrorMsg
-		echomsg "No matching buffer for" a:buffer
-		echohl None
-		return
-	endif
+  if buffer == -1
+    echohl ErrorMsg
+    echomsg "No matching buffer for" a:buffer
+    echohl None
+    return
+  endif
 
-	let last_buffer = bufnr('$')
+  let last_buffer = bufnr('$')
 
-	let delete_count = 0
-	let n = 1
-	while n <= last_buffer
-		if n != buffer && buflisted(n)
-			if a:bang == '' && getbufvar(n, '&modified')
-				echohl ErrorMsg
-				echomsg 'No write since last change for buffer'
-							\ n '(add ! to override)'
-				echohl None
-			else
-				silent exe 'bdel' . a:bang . ' ' . n
-				if ! buflisted(n)
-					let delete_count = delete_count+1
-				endif
-			endif
-		endif
-		let n = n+1
-	endwhile
+  let delete_count = 0
+  let n = 1
+  while n <= last_buffer
+    if n != buffer && buflisted(n)
+      if a:bang == '' && getbufvar(n, '&modified')
+        echohl ErrorMsg
+        echomsg 'No write since last change for buffer'
+              \ n '(add ! to override)'
+        echohl None
+      else
+        silent exe 'bdel' . a:bang . ' ' . n
+        if ! buflisted(n)
+          let delete_count = delete_count+1
+        endif
+      endif
+    endif
+    let n = n+1
+  endwhile
 
-	if delete_count == 1
-		echomsg delete_count "buffer deleted"
-	elseif delete_count > 1
-		echomsg delete_count "buffers deleted"
-	endif
+  if delete_count == 1
+    echomsg delete_count "buffer deleted"
+  elseif delete_count > 1
+    echomsg delete_count "buffers deleted"
+  endif
 
 endfunction
 "}}}
