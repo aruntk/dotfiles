@@ -369,22 +369,22 @@ augroup END
 " }}}
 
 " Word Processor Mode {{{
-augroup word_processor_mode
-  autocmd!
+" augroup word_processor_mode
+  " autocmd!
 
-  function! WordProcessorMode() " {{{
-    setlocal formatoptions=t1
-    map j gj
-    map k gk
-    setlocal smartindent
-    setlocal spell spelllang=en_ca
-    setlocal noexpandtab
-    setlocal wrap
-    setlocal linebreak
-    Goyo 100
-  endfunction " }}}
-  com! WP call WordProcessorMode()
-augroup END
+  " function! WordProcessorMode() " {{{
+    " setlocal formatoptions=t1
+    " map j gj
+    " map k gk
+    " setlocal smartindent
+    " setlocal spell spelllang=en_ca
+    " setlocal noexpandtab
+    " setlocal wrap
+    " setlocal linebreak
+    " Goyo 100
+  " endfunction " }}}
+  " com! WP call WordProcessorMode()
+" augroup END
 " }}}
 
 " Restore Cursor Position {{{
@@ -428,7 +428,7 @@ augroup END
   "
   "{{{ ale config syntax checking and fixing
   let g:ale_fixers = {}
-  let g:ale_fixers['typescript'] = ['tsc', 'tslint']
+  let g:ale_fixers['typescript'] = ['tslint']
   let g:ale_fix_on_save = 0
   let g:ale_completion_enabled = 1
   let g:ale_linters = {'jsx': ['stylelint', 'tslint']}
