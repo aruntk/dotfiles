@@ -65,11 +65,12 @@ Plug 'isRuslan/vim-es6'
 Plug 'herringtondarkholme/yats.vim'
 " Plug 'mhartington/nvim-typescript'
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'sbdchd/neoformat'
+" Plug 'sbdchd/neoformat'
 " Plug 'leafgarland/typescript-vim'
 " Plug 'peitalin/vim-jsx-typescript'
-Plug 'maxmellon/vim-jsx-pretty'
+" Plug 'maxmellon/vim-jsx-pretty'
 " Plug 'ianks/vim-tsx'
+Plug 'tasn/vim-tsx'
 " Plug 'Quramy/vim-js-pretty-template'
 " Plug 'jason0x43/vim-js-indent'
 " Plug 'maksimr/vim-jsbeautify'
@@ -78,7 +79,7 @@ Plug 'maxmellon/vim-jsx-pretty'
 " Plug 'ap/vim-css-color'
 Plug 'scrooloose/nerdcommenter'
 "react jsx syntax
-Plug 'mxw/vim-jsx'
+" Plug 'mxw/vim-jsx'
 "react styled jsx <style jsx>
 " Plug 'alampros/vim-styled-jsx'
 " Plug 'styled-components/vim-styled-components', { 'for': ['jsx', 'tsx'] }
@@ -89,11 +90,17 @@ Plug 'mxw/vim-jsx'
 
 Plug 'Townk/vim-autoclose'
 " surround something
-" Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 "closes tags while typing
 "Plug 'alvan/vim-closetag'
 "closes open tags on ctrl+_ shortcut
 Plug 'docunext/closetag.vim'
+
+"show marks
+Plug 'majutsushi/tagbar'
+
+"expand abbreviations
+" Plug 'mattn/emmet-vim'
 
 "extended % matching
 " Plug 'matchit.zip'
@@ -448,12 +455,15 @@ augroup END
   nnoremap <space>d :ALEGoToDefinition<CR>
   nnoremap <space>F :ALEFix<CR>
   nnoremap <space>f :ALEDetail<CR>
+  vnoremap <space>d :ALEGoToDefinition<CR>
+  vnoremap <space>F :ALEFix<CR>
+  vnoremap <space>f :ALEDetail<CR>
   "}}}
   "
   "
   "{{{ typescript tsx autocomplete
   " set filetypes as typescript.jsx
-  autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.jsx
+  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
   " autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
   " colors
   " light blues
