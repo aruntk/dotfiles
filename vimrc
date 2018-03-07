@@ -409,7 +409,8 @@ augroup END
   "nnoremap <space> za
   " <Enter> for newline without entering insert-mode
   "
-
+  " set foldmethod=syntax
+  " set foldlevelstart=1
 
 
   "Set html files syntax as htmlm4
@@ -434,12 +435,15 @@ augroup END
   "}}}
   "
   "{{{ ale config syntax checking and fixing
+  let g:ale_linters = {}
+  let g:ale_linters['typescript.tsx'] = ['tslint']
+  let g:ale_linters['typescript'] = ['tslint']
   let g:ale_fixers = {}
   let g:ale_fixers['typescript'] = ['tslint']
+  let g:ale_fixers['typescript.tsx'] = ['tslint']
   let g:ale_fix_on_save = 0
   let g:ale_completion_enabled = 1
-  let g:ale_linters = {'jsx': ['stylelint', 'tslint']}
-  let g:ale_linter_aliases = {'jsx': 'css'}
+  " let g:ale_linter_aliases = {'tsx': 'css'}
 
   " Set this. Airline will handle the rest.
   let g:airline#extensions#ale#enabled = 1
