@@ -23,7 +23,8 @@ Plug 'VundleVim/Vundle.vim'
 Plug 'scrooloose/nerdtree'
 
 "search
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 "Plug 'wincent/command-t'
 
@@ -45,14 +46,16 @@ Plug 'Yggdroot/indentLine'
 Plug 'w0rp/ale'
 
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
-"Plug 'valloric/youcompleteme'
+" if has('nvim')
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+  " Plug 'Shougo/deoplete.nvim'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+Plug 'valloric/youcompleteme'
+"snippets
+Plug 'honza/vim-snippets'
 "Plug 'Shougo/neocomplete'
 "Plug 'Shougo/neosnippet'
 "Plug 'Shougo/neosnippet-snippets'
@@ -88,16 +91,21 @@ Plug 'scrooloose/nerdcommenter'
 "graphql
 " Plug 'jparise/vim-graphql'
 
-Plug 'Townk/vim-autoclose'
+" Plug 'Townk/vim-autoclose'
 " surround something
 Plug 'tpope/vim-surround'
 "closes tags while typing
-"Plug 'alvan/vim-closetag'
+Plug 'raimondi/delimitmate'
+" Plug 'tpope/vim-ragtag'
+" Plug 'alvan/vim-closetag'
 "closes open tags on ctrl+_ shortcut
 Plug 'docunext/closetag.vim'
-
+Plug 'tpope/vim-unimpaired'
 "show marks
 Plug 'majutsushi/tagbar'
+
+"multiple cursors
+" Plug 'terryma/vim-multiple-cursors'
 
 "expand abbreviations
 " Plug 'mattn/emmet-vim'
@@ -111,9 +119,11 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-abolish'
 
 Plug 'altercation/vim-colors-solarized'
+" Plug 'tomasr/molokai'
+" Plug 'justinmk/molokai'
+" Plug 'flazz/vim-colorschemes'
 
 "Plug 'Shougo/vimshell.vim'
-"Plug 'Shougo/vimproc.vim'
 
 "Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
@@ -169,6 +179,9 @@ set t_Co=256
 syntax enable " Enable syntax highlighting
 set background=dark " Set dark background
 colorscheme solarized " Set color scheme
+" colorscheme molokai " Set color scheme
+" let g:molokai_original = 1
+" let g:rehash256 = 1
 set nu " Enable line numbers
 set backspace=indent,eol,start
 set cursorline "highlight currentline
@@ -442,7 +455,7 @@ augroup END
   let g:ale_fixers['typescript'] = ['tslint']
   let g:ale_fixers['typescript.tsx'] = ['tslint']
   let g:ale_fix_on_save = 0
-  let g:ale_completion_enabled = 1
+  " let g:ale_completion_enabled = 0
   " let g:ale_linter_aliases = {'tsx': 'css'}
 
   " Set this. Airline will handle the rest.
@@ -495,7 +508,7 @@ augroup END
   "autocmd FileType javascript,css,php set textwidth=79
   "}}}
   " deoplete autocomplete
-  let g:deoplete#enable_at_startup = 1
+  " let g:deoplete#enable_at_startup = 1
 
   " Strip trailing whitespace (,ss) {{{
   function! StripWhitespace () " {{{
@@ -696,8 +709,8 @@ function! MarkdownLevel()
   endif
   return "="
 endfunction
-au BufEnter *.md setlocal foldexpr=MarkdownLevel()
-au BufEnter *.md setlocal foldmethod=expr
+" au BufEnter *.md setlocal foldexpr=MarkdownLevel()
+" au BufEnter *.md setlocal foldmethod=expr
 function! NewlineEnter()
   if &buftype ==# 'quickfix'
     execute "normal! \<CR>"
