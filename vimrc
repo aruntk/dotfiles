@@ -15,142 +15,92 @@ endfunction
 "}}}
 call plug#begin('~/.local/share/nvim/plugged')
 "alternatively, pass a path where Vundle should install plugins
+
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plug 'VundleVim/Vundle.vim'
 
 Plug 'scrooloose/nerdtree'
+"Plug 'bagrat/vim-workspace'
+"Plug 'tpope/vim-vinegar'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 "search
-" Plug 'kien/ctrlp.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
-"Plug 'wincent/command-t'
-
-"moving cursor
-" Plug 'easymotion/vim-easymotion'
+"Plug 'othree/eregex.vim'
+"Plug 'dkprice/vim-easygrep'
+Plug 'haya14busa/incsearch.vim'
 
 "align paragraphs
 Plug 'junegunn/vim-easy-align'
-"Plug 'godlygeek/tabular'
-"visually displaying indent levels
-"Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
 
 "Todo List
-" Plug 'plasticboy/vim-markdown', { 'for': ['markdown'] }
-" Plug 'jceb/vim-orgmode', { 'for': ['markdown'] }
 
 "syntax checking plugin
 Plug 'w0rp/ale'
 
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-" if has('nvim')
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-  " Plug 'Shougo/deoplete.nvim'
-  " Plug 'roxma/nvim-yarp'
-  " Plug 'roxma/vim-hug-neovim-rpc'
-" endif
 Plug 'valloric/youcompleteme'
 "snippets
 Plug 'honza/vim-snippets'
-"Plug 'Shougo/neocomplete'
-"Plug 'Shougo/neosnippet'
-"Plug 'Shougo/neosnippet-snippets'
 
+"run code
+" Plug 'thinca/vim-quickrun'
+"
+"undo tree
+Plug 'sjl/gundo.vim'
 
-"Plug 'jelera/vim-javascript-syntax'
-Plug 'pangloss/vim-javascript'
-Plug 'isRuslan/vim-es6'
-" Plug 'quramy/tsuquyomi'
-Plug 'herringtondarkholme/yats.vim'
-" Plug 'mhartington/nvim-typescript'
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-" Plug 'sbdchd/neoformat'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'peitalin/vim-jsx-typescript'
-" Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'ianks/vim-tsx'
+"colorize rgb
+Plug 'lilydjwg/colorizer'
+"Syntax
+Plug 'sheerun/vim-polyglot'
+" Plug 'pangloss/vim-javascript'
+" Plug 'isRuslan/vim-es6'
+"Plug 'herringtondarkholme/yats.vim'
 Plug 'tasn/vim-tsx'
-" Plug 'Quramy/vim-js-pretty-template'
-" Plug 'jason0x43/vim-js-indent'
-" Plug 'maksimr/vim-jsbeautify'
-"Plug 'einars/js-beautify'
-" Plug 'groenewege/vim-less'
-" Plug 'ap/vim-css-color'
 Plug 'scrooloose/nerdcommenter'
-"react jsx syntax
-" Plug 'mxw/vim-jsx'
-"react styled jsx <style jsx>
-" Plug 'alampros/vim-styled-jsx'
-" Plug 'styled-components/vim-styled-components', { 'for': ['jsx', 'tsx'] }
-" Plug 'webdesus/polymer-ide.vim', { 'for': 'html' }
-" Plug 'tomlion/vim-solidity', { 'for': ['solidity'] }
-"graphql
-" Plug 'jparise/vim-graphql'
-
-" Plug 'Townk/vim-autoclose'
-" surround something
 Plug 'tpope/vim-surround'
-"closes tags while typing
 Plug 'raimondi/delimitmate'
-" Plug 'tpope/vim-ragtag'
-" Plug 'alvan/vim-closetag'
+Plug 'gcmt/wildfire.vim'
 "closes open tags on ctrl+_ shortcut
 Plug 'docunext/closetag.vim'
 Plug 'tpope/vim-unimpaired'
 "show marks
 Plug 'majutsushi/tagbar'
 
-"multiple cursors
-" Plug 'terryma/vim-multiple-cursors'
+Plug 'mhinz/vim-startify'
 
-"expand abbreviations
-" Plug 'mattn/emmet-vim'
-
-"extended % matching
-" Plug 'matchit.zip'
-"repeating . for plugins
-" Plug 'tpope/vim-repeat'
 
 " Case operations
 Plug 'tpope/vim-abolish'
 
-Plug 'altercation/vim-colors-solarized'
-" Plug 'tomasr/molokai'
-" Plug 'justinmk/molokai'
-" Plug 'flazz/vim-colorschemes'
+"repeat
+Plug 'tpope/vim-repeat'
 
-"Plug 'Shougo/vimshell.vim'
-
-"Plug 'itchyny/lightline.vim'
+"status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/promptline.vim'
 
 Plug 'christoomey/vim-tmux-navigator'
 "Session management
 Plug 'tpope/vim-obsession'
 
-" The following are examples of different formats supported.
-" Keep Plug commands between plugbegin/end.
 " plugin on GitHub repo
 Plug 'tpope/vim-fugitive'
 " git diff in the gutter
 Plug 'airblade/vim-gitgutter'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plug 'L9'
-" Git plugin not hosted on GitHub
-" Plug 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plug 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plug 'user/L9', {'name': 'newL9'}
 
+"color schemes
+"Plug 'altercation/vim-colors-solarized'
+Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'joshdick/onedark.vim'
+"glyph
+Plug 'ryanoasis/vim-devicons'
 " All of your Plugins must be added before the following line
 call plug#end() "required
 "  }}}
@@ -176,24 +126,126 @@ filetype plugin indent on    " required
 set hidden
 
 set t_Co=256
+set encoding=utf8
 syntax enable " Enable syntax highlighting
-set background=dark " Set dark background
-colorscheme solarized " Set color scheme
-" colorscheme molokai " Set color scheme
-" let g:molokai_original = 1
-" let g:rehash256 = 1
 set nu " Enable line numbers
 set backspace=indent,eol,start
 set cursorline "highlight currentline
 hi Normal ctermbg=none
+set t_ZH=^[[3m
+set t_ZR=^[[23m
+highlight Comment cterm=italic
 set wildignore+=.DS_Store
+
+" Color Theme
+" If it's beyond dusk, I use dark theme.
+" Other wise, a lighter theme will be chosen.
+let cur_hour = str2nr(strftime("%H", localtime()))
+if cur_hour > 18 || cur_hour < 8
+  colorscheme dracula " Set color scheme
+  set background=dark " Set dark background
+  "let g:evervim_airline_theme="dracula"
+else
+  colorscheme pencil " Set color scheme
+  "let g:evervim_airline_theme="dracula"
+  set background=light " Set dark background
+endif
+
+" Solarized color scheme {{{
+" Precision colors for machines and people
+" Create a dictionary of the colors for later use
+let g:sol = {
+      \"gui": {
+      \"base03": "#002b36",
+      \"base02": "#073642",
+      \"base01": "#586e75",
+      \"base00": "#657b83",
+      \"base0": "#839496",
+      \"base1": "#93a1a1",
+      \"base2": "#eee8d5",
+      \"base3": "#fdf6e3",
+      \"yellow": "#b58900",
+      \"orange": "#cb4b16",
+      \"red": "#dc322f",
+      \"magenta": "#d33682",
+      \"violet": "#6c71c4",
+      \"blue": "#268bd2",
+      \"cyan": "#2aa198",
+      \"green": "#719e07"
+      \},
+      \"cterm": {
+      \"base03": 8,
+      \"base02": 0,
+      \"base01": 10,
+      \"base00": 11,
+      \"base0": 12,
+      \"base1": 14,
+      \"base2": 7,
+      \"base3": 15,
+      \"yellow": 3,
+      \"orange": 9,
+      \"red": 1,
+      \"magenta": 5,
+      \"violet": 13,
+      \"blue": 4,
+      \"cyan": 6,
+      \"green": 2
+      \}
+      \}
+" }}}
+"
+
+"Pretty icons
+function! DeviconsColors(config) "{{{
+  let colors = keys(a:config)
+  augroup devicons_colors
+    autocmd!
+    for color in colors
+      if color == 'normal'
+        exec 'autocmd FileType nerdtree,startify if &background == ''dark'' | '.
+              \ 'highlight devicons_'.color.' guifg='.g:sol.gui.base01.' ctermfg='.g:sol.cterm.base01.' | '.
+              \ 'else | '.
+              \ 'highlight devicons_'.color.' guifg='.g:sol.gui.base1.' ctermfg='.g:sol.cterm.base1.' | '.
+              \ 'endif'
+      elseif color == 'emphasize'
+        exec 'autocmd FileType nerdtree,startify if &background == ''dark'' | '.
+              \ 'highlight devicons_'.color.' guifg='.g:sol.gui.base1.' ctermfg='.g:sol.cterm.base1.' | '.
+              \ 'else | '.
+              \ 'highlight devicons_'.color.' guifg='.g:sol.gui.base01.' ctermfg='.g:sol.cterm.base01.' | '.
+              \ 'endif'
+      else
+        exec 'autocmd FileType nerdtree,startify highlight devicons_'.color.' guifg='.g:sol.gui[color].' ctermfg='.g:sol.cterm[color]
+      endif
+      exec 'autocmd FileType nerdtree,startify syntax match devicons_'.color.' /\v'.join(a:config[color], '|').'/ containedin=ALL'
+    endfor
+  augroup END
+endfunction
+let g:devicons_colors = {
+      \'normal': ['', '', '', '', ''],
+      \'emphasize': ['', '', '', '', '', '', '', '', '', '', ''],
+      \'yellow': ['', '', ''],
+      \'orange': ['', '', '', 'λ', '', ''],
+      \'red': ['', '', '', '', '', '', '', '', ''],
+      \'magenta': [''],
+      \'violet': ['', '', '', ''],
+      \'blue': ['', '', '', '', '', '', '', '', '', '', '', '', ''],
+      \'cyan': ['', '', '', ''],
+      \'green': ['', '', '', '']
+      \}
+call DeviconsColors(g:devicons_colors)
+"
+"}}}
+
+
 " Highlight searches
-set hlsearch
+"set hlsearch
 " Ignore case of searches
 "set ignorecase
 " Highlight dynamically as pattern is typed
-set incsearch
-
+"set incsearch
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 " }}}
 
 " Leader {{{
@@ -204,6 +256,7 @@ let mapleader = ","
 "NerdTree  {{{
 " My NerdTree shortcut
 map <C-n> :NERDTreeToggle<CR>
+"let NERDTreeHijackNetrw=1
 "let NerdTreeDirArrows=0 "tree arrows disabled
 
 let NERDTreeShowHidden=1
@@ -211,8 +264,28 @@ let NERDTreeIgnore = ['\.sw']
 " }}}
 "
 "NerdCommenter {{{
-let NERDSpaceDelims=1
+" let NERDSpaceDelims=1
 "}}}
+"
+"Workspace {{{
+"noremap <Tab> :WSNext<CR>
+"noremap <S-Tab> :WSPrev<CR>
+"noremap <Leader><Tab> :WSClose<CR>
+"noremap <Leader><S-Tab> :WSClose!<CR>
+"noremap <C-t> :WSTabNew<CR>
+
+"cabbrev bonly WSBufOnly
+"let g:workspace_powerline_separators = 1
+"let g:workspace_tab_icon = "\uf00a"
+"let g:workspace_left_trunc_icon = "\uf0a8"
+"let g:workspace_right_trunc_icon = "\uf0a9"
+"}}}
+"
+"Netrw {{{
+let g:netrw_liststyle=3
+let g:netrw_altv = 1
+"}}}
+"
 "
 " Local directories {{{
 set backupdir=~/.vim/backups
@@ -230,13 +303,13 @@ set wildignore+=*/smarty/*,*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,
 " }}}
 "
 " Hard to type things {{{
-  iabbrev >> →
-  iabbrev << ←
-  iabbrev ^^ ↑
-  iabbrev VV ↓
-  iabbrev aa λ
-  " }}}
-  "
+iabbrev >> →
+iabbrev << ←
+iabbrev ^^ ↑
+iabbrev VV ↓
+iabbrev aa λ
+" }}}
+"
 " General {{{
 augroup general_config
   autocmd!
@@ -309,7 +382,7 @@ augroup general_config
   nnoremap <leader>p :CtrlPBuffer<CR>
   vnoremap <leader>p :CtrlPBuffer<CR>
 
-" Clear last search (,qs) {{{
+  " Clear last search (,qs) {{{
   map <silent> <leader>qs <Esc>:noh<CR>
   " map <silent> <leader>qs <Esc>:let @/ = ""<CR>
   " }}}
@@ -328,95 +401,101 @@ augroup general_config
 
   "}}}
 
- " Yank from cursor to end of line {{{
+  " Yank from cursor to end of line {{{
   nnoremap Y y$
   " }}}
   "
- " Join lines and restore cursor location (J) {{{
+  " Join lines and restore cursor location (J) {{{
   nnoremap J mjJ`j
   " }}}
-
-" Highlight Interesting Words {{{
-augroup highlight_interesting_word
-  autocmd!
-  " This mini-plugin provides a few mappings for highlighting words temporarily.
   "
-  " Sometimes you're looking at a hairy piece of code and would like a certain
-  " word or two to stand out temporarily.  You can search for it, but that only
-  " gives you one color of highlighting.  Now you can use <leader>N where N is
-  " a number from 1-6 to highlight the current word in a specific color.
-  function! HiInterestingWord(n) " {{{
-    " Save our location.
-    normal! mz
+  " tagbar map {{{
+  nmap <F8> :TagbarToggle<CR>
+  " Set default width
+  let g:tagbar_width = 30
+  " Typescript Tags
+  let g:tagbar_type_typescript = {
+        \ 'ctagsbin' : 'tstags',
+        \ 'ctagsargs' : '-f-',
+        \ 'kinds': [
+        \ 'e:enums:0:1',
+        \ 'f:function:0:1',
+        \ 't:typealias:0:1',
+        \ 'M:Module:0:1',
+        \ 'I:import:0:1',
+        \ 'i:interface:0:1',
+        \ 'C:class:0:1',
+        \ 'm:method:0:1',
+        \ 'p:property:0:1',
+        \ 'v:variable:0:1',
+        \ 'c:const:0:1',
+        \ ],
+        \ 'sort' : 0
+        \ }
+  " }}}
+  "
+  " Highlight Interesting Words {{{
+  augroup highlight_interesting_word
+    autocmd!
+    " This mini-plugin provides a few mappings for highlighting words temporarily.
+    "
+    " Sometimes you're looking at a hairy piece of code and would like a certain
+    " word or two to stand out temporarily.  You can search for it, but that only
+    " gives you one color of highlighting.  Now you can use <leader>N where N is
+    " a number from 1-6 to highlight the current word in a specific color.
+    function! HiInterestingWord(n) " {{{
+      " Save our location.
+      normal! mz
 
-    " Yank the current word into the z register.
-    normal! "zyiw
+      " Yank the current word into the z register.
+      normal! "zyiw
 
-    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
-    let mid = 86750 + a:n
+      " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
+      let mid = 86750 + a:n
 
-    " Clear existing matches, but don't worry if they don't exist.
-    silent! call matchdelete(mid)
+      " Clear existing matches, but don't worry if they don't exist.
+      silent! call matchdelete(mid)
 
-    " Construct a literal pattern that has to match at boundaries.
-    let pat = '\V\<' . escape(@z, '\') . '\>'
+      " Construct a literal pattern that has to match at boundaries.
+      let pat = '\V\<' . escape(@z, '\') . '\>'
 
-    " Actually match the words.
-    call matchadd("InterestingWord" . a:n, pat, 1, mid)
+      " Actually match the words.
+      call matchadd("InterestingWord" . a:n, pat, 1, mid)
 
-    " Move back to our original location.
-    normal! `z
-  endfunction " }}}
+      " Move back to our original location.
+      normal! `z
+    endfunction " }}}
 
-  " Mappings {{{
-  nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
-  nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
-  nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
-  nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
-  nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
-  nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+    " Mappings {{{
+    nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+    nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+    nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+    nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+    nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+    nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+    " }}}
+
+    " Default Highlights {{{
+    hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
+    hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
+    hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
+    hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
+    hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
+    hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+    " }}}
+  augroup END
   " }}}
 
-  " Default Highlights {{{
-  hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
-  hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
-  hi def InterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
-  hi def InterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
-  hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
-  hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+  " Restore Cursor Position {{{
+  augroup restore_cursor
+    autocmd!
+
+    autocmd BufReadPost *
+          \ if line("'\"") > 1 && line("'\"") <= line("$") |
+          \   exe "normal! g`\"" |
+          \ endif
+  augroup END
   " }}}
-augroup END
-" }}}
-
-" Word Processor Mode {{{
-" augroup word_processor_mode
-  " autocmd!
-
-  " function! WordProcessorMode() " {{{
-    " setlocal formatoptions=t1
-    " map j gj
-    " map k gk
-    " setlocal smartindent
-    " setlocal spell spelllang=en_ca
-    " setlocal noexpandtab
-    " setlocal wrap
-    " setlocal linebreak
-    " Goyo 100
-  " endfunction " }}}
-  " com! WP call WordProcessorMode()
-" augroup END
-" }}}
-
-" Restore Cursor Position {{{
-augroup restore_cursor
-  autocmd!
-
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-augroup END
-" }}}
   " space open/closes folds
   "set foldmethod=indent
   "nnoremap <space> za
@@ -555,52 +634,6 @@ augroup buffer_control
 augroup END
 " }}}
 
-" Jumping to tags {{{
-augroup jump_to_tags
-  autocmd!
-
-  " Basically, <c-]> jumps to tags (like normal) and <c-\> opens the tag in a new
-  " split instead.
-  "
-  " Both of them will align the destination line to the upper middle part of the
-  " screen.  Both will pulse the cursor line so you can see where the hell you
-  " are.  <c-\> will also fold everything in the buffer and then unfold just
-  " enough for you to see the destination line.
-  nnoremap <c-]> <c-]>mzzvzz15<c-e>`z:Pulse<cr>
-  nnoremap <c-\> <c-w>v<c-]>mzzMzvzz15<c-e>`z:Pulse<cr>
-
-  " Pulse Line (thanks Steve Losh)
-  function! s:Pulse() " {{{
-    redir => old_hi
-    silent execute 'hi CursorLine'
-    redir END
-    let old_hi = split(old_hi, '\n')[0]
-    let old_hi = substitute(old_hi, 'xxx', '', '')
-
-    let steps = 8
-    let width = 1
-    let start = width
-    let end = steps * width
-    let color = 233
-
-    for i in range(start, end, width)
-      execute "hi CursorLine ctermbg=" . (color + i)
-      redraw
-      sleep 6m
-    endfor
-    for i in range(end, start, -1 * width)
-      execute "hi CursorLine ctermbg=" . (color + i)
-      redraw
-      sleep 6m
-    endfor
-
-    execute 'hi ' . old_hi
-  endfunction " }}}
-
-  command! -nargs=0 Pulse call s:Pulse()
-augroup END
-" }}}
-
 
 "============== File Types ============
 
@@ -649,6 +682,10 @@ augroup ctrlp_config
   let g:ctrlp_open_multiple_files = 'ij' " Open multiple files in hidden buffers, and jump to the first one
 augroup END
 " }}}
+"
+"ack config {{{
+let g:ackprg = 'ag --nogroup --nocolor --column'
+"}}}
 
 " EasyAlign.vim {{{
 " augroup easy_align_config
@@ -674,11 +711,41 @@ augroup END
 " }}}
 
 
+"  tmuxline config  {{{
+let g:tmuxline_theme = 'airline_insert'
+let g:tmuxline_preset = {
+    \ 'a': '#S',
+    \ 'b': '#F',
+    \ 'c': '#W',
+    \ 'win': ['#I', '#W'],
+    \ 'cwin': ['#I', '#W'],
+    \ 'x': '%a',
+    \ 'y': ['%b %d', '%R'],
+    \ 'z': '#h'}
+
+"}}}
+"  promptline config  {{{
+let g:promptline_theme = 'airline'
+let g:promptline_preset = {
+        \'a': [ promptline#slices#python_virtualenv() ],
+        \'b': [ promptline#slices#cwd({'dir_limit': 2}) ],
+        \'c': [ promptline#slices#vcs_branch(), '$(git rev-parse --short HEAD 2>/dev/null)' ],
+        \'x': [ promptline#slices#git_status() ],
+\'warn': [ promptline#slices#last_exit_code() ]}
+"}}}
+
 "Close Tag {{{
 "# filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
 " }}}
 
+"wildfire config {{{
+" This selects the next closest text object.
+map <SPACE> <Plug>(wildfire-fuel)
+
+" This selects the previous closest text object.
+vmap <C-SPACE> <Plug>(wildfire-water)
+"}}}
 
 func! DeleteTrailingWS()
   exe "normal mz"
