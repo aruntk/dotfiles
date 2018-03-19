@@ -527,12 +527,7 @@ augroup general_config
   "}}}
   "
   "{{{ ale config syntax checking and fixing
-  let g:ale_linters = {}
-  let g:ale_linters['typescript.tsx'] = ['tslint']
-  let g:ale_linters['typescript'] = ['tslint']
-  let g:ale_fixers = {}
-  let g:ale_fixers['typescript'] = ['tslint']
-  let g:ale_fixers['typescript.tsx'] = ['tslint']
+
   let g:ale_fix_on_save = 0
   " let g:ale_completion_enabled = 0
   " let g:ale_linter_aliases = {'tsx': 'css'}
@@ -541,19 +536,58 @@ augroup general_config
   let g:airline#extensions#ale#enabled = 1
   let g:ale_sign_error = '✗'
   let g:ale_sign_warning = '?'
+  let g:ale_warn_about_trailing_whitespace = 0
+  let g:ale_maximum_file_size = 1024 * 1024
+  let g:ale_completion_enabled = 1
+  let g:ale_linters = {
+        \   'html': [],
+        \   'javascript': ['eslint'],
+        \   'typescript': ['tslint', 'tsserver'],
+        \   'python': ['flake8'],
+        \}
+
+  let g:ale_pattern_options_enabled = 1
+  let g:ale_pattern_options = {
+        \   'python-to-typescript/python_to_typescript/.*$': {
+        \       'ale_linters': {'python': ['flake8', 'pylint']},
+        \   },
+        \   'site-packages/.*$': {
+        \       'ale_enabled': 0,
+        \       '&modifiable': 0,
+        \   },
+        \   '\.pyi$': {
+        \       'ale_linters': ['mypy'],
+        \   },
+        \   '\v\.min\.(js|css)$': {
+        \       'ale_linters': [],
+        \       'ale_fixers': [],
+        \   },
+        \   'node_modules': {
+        \       'ale_fixers': [],
+        \   },
+        \   '/python-ls-project/': {
+        \       'ale_linters': {'python': ['pyls', 'flake8']},
+        \   },
+        \}
+  " Options for different linters.
+  let g:ale_python_mypy_ignore_parse_errors = 1
+  let g:ale_python_mypy_options = '--incremental'
+  let g:ale_typescript_tslint_ignore_empty_files = 1
+  let g:ale_lint_on_text_changed = 'normal'
+  let g:ale_lint_on_insert_leave = 1
 
   nnoremap <leader>] :lnext<CR>
   nnoremap <leader>[ :lprevious<CR>
   " disable space = cursor movement
-  nnoremap <space> <Nop>
-  vnoremap <space> <Nop>
-  nnoremap <space>[ :lrewind<CR>
-  nnoremap <space>d :ALEGoToDefinition<CR>
-  nnoremap <space>F :ALEFix<CR>
-  nnoremap <space>f :ALEDetail<CR>
-  vnoremap <space>d :ALEGoToDefinition<CR>
-  vnoremap <space>F :ALEFix<CR>
-  vnoremap <space>f :ALEDetail<CR>
+  "nnoremap <space> <Nop>
+  "vnoremap <space> <Nop>
+  "nnoremap <leader>{ :lrewind<CR>
+  nnoremap <leader>d :ALEGoToDefinition<CR>
+  nnoremap <leader>F :ALEFix<CR>
+  nnoremap <leader>f :ALEDetail<CR>
+  vnoremap <leader>d :ALEGoToDefinition<CR>
+  vnoremap <leader>F :ALEFix<CR>
+  vnoremap <leader>f :ALEDetail<CR>
   "}}}
   "
   "
@@ -657,8 +691,6 @@ augroup filetype_markdown
   let g:markdown_fenced_languages = ['ruby', 'html', 'javascript', 'css', 'erb=eruby.html', 'bash=sh', 'typescript']
 augroup END
 " }}}
-
-"=============== Plugins ===========
 
 " Indent Guide {{{
 "hi IndentGuidesOdd  ctermbg=black
