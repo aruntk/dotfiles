@@ -56,11 +56,18 @@ Plug 'sjl/gundo.vim'
 "colorize rgb
 Plug 'lilydjwg/colorizer'
 "Syntax
-Plug 'sheerun/vim-polyglot'
-" Plug 'pangloss/vim-javascript'
+"Plug 'sheerun/vim-polyglot'
+Plug 'pangloss/vim-javascript'
 " Plug 'isRuslan/vim-es6'
-"Plug 'herringtondarkholme/yats.vim'
-Plug 'tasn/vim-tsx'
+Plug 'herringtondarkholme/yats.vim'
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'tasn/vim-tsx'
+"Plug 'mhartington/nvim-typescript', {'do': 'sh install.sh'}
+"Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescript.tsx']}
+"Plug 'mxw/vim-jsx'
+Plug 'ianks/vim-tsx', { 'for': 'typescriptreact' }
+"Plug 'jason0x43/vim-js-indent'
+
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'raimondi/delimitmate'
@@ -96,8 +103,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 "color schemes
-"Plug 'altercation/vim-colors-solarized'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'altercation/vim-colors-solarized'
+"Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'joshdick/onedark.vim'
 "glyph
 Plug 'ryanoasis/vim-devicons'
@@ -142,13 +149,13 @@ set wildignore+=.DS_Store
 " Other wise, a lighter theme will be chosen.
 let cur_hour = str2nr(strftime("%H", localtime()))
 if cur_hour > 18 || cur_hour < 8
-  colorscheme dracula " Set color scheme
+  colorscheme solarized " Set color scheme
   set background=dark " Set dark background
   "let g:evervim_airline_theme="dracula"
 else
-  colorscheme pencil " Set color scheme
+  colorscheme solarized " Set color scheme
   "let g:evervim_airline_theme="dracula"
-  set background=light " Set dark background
+  set background=dark " Set dark background
 endif
 
 " Solarized color scheme {{{
@@ -525,13 +532,20 @@ augroup general_config
   nnoremap <leader>l :call NumberToggle()<cr>
 
   "}}}
+  "{{{ menu settings
   "
+  inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+        \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+  inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+        \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+  "}}}
   "{{{ ale config syntax checking and fixing
 
   let g:ale_fix_on_save = 0
   " let g:ale_completion_enabled = 0
   " let g:ale_linter_aliases = {'tsx': 'css'}
-
+  let g:ale_linter_aliases = {'typescriptreact': 'typescript'}
   " Set this. Airline will handle the rest.
   let g:airline#extensions#ale#enabled = 1
   let g:ale_sign_error = '✗'
@@ -543,6 +557,7 @@ augroup general_config
         \   'html': [],
         \   'javascript': ['eslint'],
         \   'typescript': ['tslint', 'tsserver'],
+        \   'typescript.tsx': ['tslint', 'tsserver'],
         \   'python': ['flake8'],
         \}
 
@@ -590,10 +605,9 @@ augroup general_config
   vnoremap <leader>f :ALEDetail<CR>
   "}}}
   "
-  "
   "{{{ typescript tsx autocomplete
   " set filetypes as typescript.jsx
-  autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+  "autocmd BufNewFile,BufRead *.tsx set filetype=typescript.jsx
   " autocmd FileType typescript nmap <buffer> <Leader>T : <C-u>echo tsuquyomi#hint()<CR>
   " colors
   " light blues
@@ -611,17 +625,18 @@ augroup general_config
   set tabstop=2
   set expandtab
   "Indentation for WebDevelopment
-  autocmd FileType jsx,typescript,javascript,html,css,php set ai
-  autocmd FileType jsx,typescript,javascript,html,css,php set sw=2
-  autocmd FileType jsx,typescript,javascript,html,css,php set ts=2
-  autocmd FileType jsx,typescript,javascript,html,css,php set sts=2
-  let g:neoformat_enabled_typescript = ['prettier']
+  autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set ai
+  autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set sw=2
+  autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set ts=2
+  autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set sts=2
+  "let g:neoformat_enabled_typescript = ['prettier']
   " disable typescript indentation
-  " let g:typescript_indent_disable = 1
+  "let g:typescript_indent_disable = 1
   "autocmd FileType javascript,css,php set textwidth=79
   "}}}
   " deoplete autocomplete
-  " let g:deoplete#enable_at_startup = 1
+  "let g:deoplete#enable_at_startup = 1
+  "let g:deoplete#num_processes = 1
 
   " Strip trailing whitespace (,ss) {{{
   function! StripWhitespace () " {{{
@@ -633,12 +648,7 @@ augroup general_config
   endfunction " }}}
   noremap <leader>ss :call StripWhitespace ()<CR>
   " }}}
-
-
-
-augroup END
 " }}}
-
 " Buffers {{{
 augroup buffer_control
   autocmd!
@@ -688,7 +698,7 @@ augroup END
 " Markdown {{{
 augroup filetype_markdown
   autocmd!
-  let g:markdown_fenced_languages = ['ruby', 'html', 'javascript', 'css', 'erb=eruby.html', 'bash=sh', 'typescript']
+  let g:markdown_fenced_languages = ['ruby', 'html', 'javascript', 'css', 'erb=eruby.html', 'bash=sh', 'typescript', 'typescript.tsx']
 augroup END
 " }}}
 

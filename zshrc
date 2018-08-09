@@ -56,6 +56,7 @@ thefuck
 yarn
 npm
 frontend-search
+zsh-autosuggestions
 )
 
 # User configuration
