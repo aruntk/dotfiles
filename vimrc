@@ -92,6 +92,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'edkolev/promptline.vim'
+set statusline=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
+set laststatus=2  " always display the status line
 
 Plug 'christoomey/vim-tmux-navigator'
 "Session management
@@ -588,7 +590,7 @@ augroup general_config
   let g:ale_python_mypy_ignore_parse_errors = 1
   let g:ale_python_mypy_options = '--incremental'
   let g:ale_typescript_tslint_ignore_empty_files = 1
-  let g:ale_lint_on_text_changed = 'normal'
+  "let g:ale_lint_on_text_changed = 'never'
   let g:ale_lint_on_insert_leave = 1
 
   nnoremap <leader>] :lnext<CR>
@@ -620,15 +622,37 @@ augroup general_config
 
   "Indentation {{{
   " by default, the indent is 2 spaces.
-  set shiftwidth=2
-  set softtabstop=2
-  set tabstop=2
-  set expandtab
+  " --------------------------------------------------------------------------------
+  " configure editor with tabs and nice stuff...
+  " --------------------------------------------------------------------------------
+  set expandtab           " enter spaces when tab is pressed
+  set textwidth=120       " break lines when line length increases
+  set tabstop=4           " use 4 spaces to represent tab
+  set softtabstop=4
+  set shiftwidth=4        " number of spaces to use for auto indent
+  set autoindent          " copy indent from current line when starting a new line
+
+  " configure expanding of tabs for various file types
+  au BufRead,BufNewFile *.py set expandtab
+  au BufRead,BufNewFile *.c set noexpandtab
+  au BufRead,BufNewFile *.h set noexpandtab
+  au BufRead,BufNewFile Makefile* set noexpandtab
+
+
+  " make backspaces more powerfull
+  set backspace=indent,eol,start
+
+  set ruler                           " show line and column number
+  syntax on               " syntax highlighting
+  set showcmd             " show (partial) command in status line
+
+
   "Indentation for WebDevelopment
   autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set ai
   autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set sw=2
   autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set ts=2
   autocmd FileType tsx,jsx,tsx,typescript,typescript.tsx,javascript,html,css,php set sts=2
+
   "let g:neoformat_enabled_typescript = ['prettier']
   " disable typescript indentation
   "let g:typescript_indent_disable = 1
@@ -648,253 +672,253 @@ augroup general_config
   endfunction " }}}
   noremap <leader>ss :call StripWhitespace ()<CR>
   " }}}
-" }}}
-" Buffers {{{
-augroup buffer_control
-  autocmd!
+  " }}}
+  " Buffers {{{
+  augroup buffer_control
+    autocmd!
 
-  " Prompt for buffer to select (,bs) {{{
-  nnoremap <leader>bs :CtrlPBuffer<CR>
+    " Prompt for buffer to select (,bs) {{{
+    nnoremap <leader>bs :CtrlPBuffer<CR>
+    " }}}
+
+    " Buffer navigation (,,) (gb) (gB) (,ls) {{{
+    map <Leader>, <C-^>
+    map <Leader>ls :buffers<CR>
+    map gb :bnext<CR>
+    map gB :bprev<CR>
+    " }}}
+
+    " Jump to buffer number (<N>gb) {{{
+    let c = 1
+    while c <= 99
+      execute "nnoremap " . c . "gb :" . c . "b\<CR>"
+      let c += 1
+    endwhile
+    " }}}
+
+    " Close Quickfix window (,qq) {{{
+    map <leader>qq :cclose<CR>
+    " }}}
+  augroup END
   " }}}
 
-  " Buffer navigation (,,) (gb) (gB) (,ls) {{{
-  map <Leader>, <C-^>
-  map <Leader>ls :buffers<CR>
-  map gb :bnext<CR>
-  map gB :bprev<CR>
+
+  "============== File Types ============
+
+  " JavaScript {{{
+  augroup filetype_javascript
+    autocmd!
+    let g:javascript_conceal = 1
+  augroup END
   " }}}
 
-  " Jump to buffer number (<N>gb) {{{
-  let c = 1
-  while c <= 99
-    execute "nnoremap " . c . "gb :" . c . "b\<CR>"
-    let c += 1
-  endwhile
+  " JSON {{{
+  augroup filetype_json
+    autocmd!
+    au BufRead,BufNewFile *.json set ft=json syntax=javascript
+  augroup END
   " }}}
 
-  " Close Quickfix window (,qq) {{{
-  map <leader>qq :cclose<CR>
+  " Markdown {{{
+  augroup filetype_markdown
+    autocmd!
+    let g:markdown_fenced_languages = ['ruby', 'html', 'javascript', 'css', 'erb=eruby.html', 'bash=sh', 'typescript', 'typescript.tsx']
+  augroup END
   " }}}
-augroup END
-" }}}
+
+  " Indent Guide {{{
+  "hi IndentGuidesOdd  ctermbg=black
+  "hi IndentGuidesEven ctermbg=darkgrey
+  " }}}
+
+  " React settings {{{
+  let g:jsx_ext_required = 0
+  " }}}
+
+  " CtrlP.vim {{{
+  augroup ctrlp_config
+    autocmd!
+    let g:ctrlp_clear_cache_on_exit = 0 " Do not clear filenames cache, to improve CtrlP startup
+    let g:ctrlp_lazy_update = 350 " Set delay to prevent extra search
+    "let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' } " Use python fuzzy matcher for better performance
+    let g:ctrlp_match_window_bottom = 0 " Show at top of window
+    let g:ctrlp_max_files = 0 " Set no file limit, we are building a big project
+    let g:ctrlp_switch_buffer = 'Et' " Jump to tab AND buffer if already open
+    let g:ctrlp_open_new_file = 'r' " Open newly created files in the current window
+    let g:ctrlp_open_multiple_files = 'ij' " Open multiple files in hidden buffers, and jump to the first one
+  augroup END
+  " }}}
+  "
+  "ack config {{{
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+  "}}}
+
+  " EasyAlign.vim {{{
+  " augroup easy_align_config
+  " autocmd!
+  " vmap <Enter> <Plug>(EasyAlign)
+  " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+  " nmap <Leader>a <Plug>(EasyAlign)
+  " Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
+  " augroup END
+  " }}}
+
+  " Airline.vim {{{
+  augroup airline_config
+    autocmd!
+    let g:airline_powerline_fonts = 1
+    " let g:airline_enable_syntastic = 1
+    let g:airline#extensions#tabline#buffer_nr_format = '%s '
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#fnamecollapse = 0
+    let g:airline#extensions#tabline#fnamemod = ':t'
+  augroup END
+  " }}}
 
 
-"============== File Types ============
+  "  tmuxline config  {{{
+  let g:tmuxline_theme = 'airline_insert'
+  let g:tmuxline_preset = {
+        \ 'a': '#S',
+        \ 'b': '#F',
+        \ 'c': '#W',
+        \ 'win': ['#I', '#W'],
+        \ 'cwin': ['#I', '#W'],
+        \ 'x': '%a',
+        \ 'y': ['%b %d', '%R'],
+        \ 'z': '#h'}
 
-" JavaScript {{{
-augroup filetype_javascript
-  autocmd!
-  let g:javascript_conceal = 1
-augroup END
-" }}}
-
-" JSON {{{
-augroup filetype_json
-  autocmd!
-  au BufRead,BufNewFile *.json set ft=json syntax=javascript
-augroup END
-" }}}
-
-" Markdown {{{
-augroup filetype_markdown
-  autocmd!
-  let g:markdown_fenced_languages = ['ruby', 'html', 'javascript', 'css', 'erb=eruby.html', 'bash=sh', 'typescript', 'typescript.tsx']
-augroup END
-" }}}
-
-" Indent Guide {{{
-"hi IndentGuidesOdd  ctermbg=black
-"hi IndentGuidesEven ctermbg=darkgrey
-" }}}
-
-" React settings {{{
-let g:jsx_ext_required = 0
-" }}}
-
-" CtrlP.vim {{{
-augroup ctrlp_config
-  autocmd!
-  let g:ctrlp_clear_cache_on_exit = 0 " Do not clear filenames cache, to improve CtrlP startup
-  let g:ctrlp_lazy_update = 350 " Set delay to prevent extra search
-  "let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' } " Use python fuzzy matcher for better performance
-  let g:ctrlp_match_window_bottom = 0 " Show at top of window
-  let g:ctrlp_max_files = 0 " Set no file limit, we are building a big project
-  let g:ctrlp_switch_buffer = 'Et' " Jump to tab AND buffer if already open
-  let g:ctrlp_open_new_file = 'r' " Open newly created files in the current window
-  let g:ctrlp_open_multiple_files = 'ij' " Open multiple files in hidden buffers, and jump to the first one
-augroup END
-" }}}
-"
-"ack config {{{
-let g:ackprg = 'ag --nogroup --nocolor --column'
-"}}}
-
-" EasyAlign.vim {{{
-" augroup easy_align_config
-" autocmd!
-" vmap <Enter> <Plug>(EasyAlign)
-" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-" nmap <Leader>a <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. <Leader>aip)
-" augroup END
-" }}}
-
-" Airline.vim {{{
-augroup airline_config
-  autocmd!
-  let g:airline_powerline_fonts = 1
-  " let g:airline_enable_syntastic = 1
-  let g:airline#extensions#tabline#buffer_nr_format = '%s '
-  let g:airline#extensions#tabline#buffer_nr_show = 1
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#fnamecollapse = 0
-  let g:airline#extensions#tabline#fnamemod = ':t'
-augroup END
-" }}}
-
-
-"  tmuxline config  {{{
-let g:tmuxline_theme = 'airline_insert'
-let g:tmuxline_preset = {
-    \ 'a': '#S',
-    \ 'b': '#F',
-    \ 'c': '#W',
-    \ 'win': ['#I', '#W'],
-    \ 'cwin': ['#I', '#W'],
-    \ 'x': '%a',
-    \ 'y': ['%b %d', '%R'],
-    \ 'z': '#h'}
-
-"}}}
-"  promptline config  {{{
-let g:promptline_theme = 'airline'
-let g:promptline_preset = {
+  "}}}
+  "  promptline config  {{{
+  let g:promptline_theme = 'airline'
+  let g:promptline_preset = {
         \'a': [ promptline#slices#python_virtualenv() ],
         \'b': [ promptline#slices#cwd({'dir_limit': 2}) ],
         \'c': [ promptline#slices#vcs_branch(), '$(git rev-parse --short HEAD 2>/dev/null)' ],
         \'x': [ promptline#slices#git_status() ],
-\'warn': [ promptline#slices#last_exit_code() ]}
-"}}}
+        \'warn': [ promptline#slices#last_exit_code() ]}
+  "}}}
 
-"Close Tag {{{
-"# filenames like *.xml, *.html, *.xhtml, ...
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
-" }}}
+  "Close Tag {{{
+  "# filenames like *.xml, *.html, *.xhtml, ...
+  let g:closetag_filenames = "*.html,*.xhtml,*.phtml"
+  " }}}
 
-"wildfire config {{{
-" This selects the next closest text object.
-map <SPACE> <Plug>(wildfire-fuel)
+  "wildfire config {{{
+  " This selects the next closest text object.
+  map <SPACE> <Plug>(wildfire-fuel)
 
-" This selects the previous closest text object.
-vmap <C-SPACE> <Plug>(wildfire-water)
-"}}}
+  " This selects the previous closest text object.
+  vmap <C-SPACE> <Plug>(wildfire-water)
+  "}}}
 
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-noremap <leader>w :call DeleteTrailingWS()<CR>
+  func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+  endfunc
+  noremap <leader>w :call DeleteTrailingWS()<CR>
 
-" MarkDown config {{{
-function! MarkdownLevel()
-  if getline(v:lnum) =~ '^# .*$'
-    return ">1"
-  endif
-  if getline(v:lnum) =~ '^## .*$'
-    return ">2"
-  endif
-  if getline(v:lnum) =~ '^### .*$'
-    return ">3"
-  endif
-  if getline(v:lnum) =~ '^#### .*$'
-    return ">4"
-  endif
-  if getline(v:lnum) =~ '^##### .*$'
-    return ">5"
-  endif
-  if getline(v:lnum) =~ '^###### .*$'
-    return ">6"
-  endif
-  return "="
-endfunction
-" au BufEnter *.md setlocal foldexpr=MarkdownLevel()
-" au BufEnter *.md setlocal foldmethod=expr
-function! NewlineEnter()
-  if &buftype ==# 'quickfix'
-    execute "normal! \<CR>"
-  else
-    normal! o
-  endif
-endfunction
-" enter to new line if not in quickfix window
-nnoremap <CR> :call NewlineEnter()<CR>
-nmap <leader>/ ,c
-vmap <leader>/ ,c
-"}}}
-"
-"{{{
-" BufOnly.vim  -  Delete all the buffers except the current/named buffer.
-"
-" :Bonly / :BOnly / :Bufonly / :BufOnly [buffer]
-"
-" Without any arguments the current buffer is kept.  With an argument the
-" buffer name/number supplied is kept.
+  " MarkDown config {{{
+  function! MarkdownLevel()
+    if getline(v:lnum) =~ '^# .*$'
+      return ">1"
+    endif
+    if getline(v:lnum) =~ '^## .*$'
+      return ">2"
+    endif
+    if getline(v:lnum) =~ '^### .*$'
+      return ">3"
+    endif
+    if getline(v:lnum) =~ '^#### .*$'
+      return ">4"
+    endif
+    if getline(v:lnum) =~ '^##### .*$'
+      return ">5"
+    endif
+    if getline(v:lnum) =~ '^###### .*$'
+      return ">6"
+    endif
+    return "="
+  endfunction
+  " au BufEnter *.md setlocal foldexpr=MarkdownLevel()
+  " au BufEnter *.md setlocal foldmethod=expr
+  function! NewlineEnter()
+    if &buftype ==# 'quickfix'
+      execute "normal! \<CR>"
+    else
+      normal! o
+    endif
+  endfunction
+  " enter to new line if not in quickfix window
+  nnoremap <CR> :call NewlineEnter()<CR>
+  nmap <leader>/ ,c
+  vmap <leader>/ ,c
+  "}}}
+  "
+  "{{{
+  " BufOnly.vim  -  Delete all the buffers except the current/named buffer.
+  "
+  " :Bonly / :BOnly / :Bufonly / :BufOnly [buffer]
+  "
+  " Without any arguments the current buffer is kept.  With an argument the
+  " buffer name/number supplied is kept.
 
-command! -nargs=? -complete=buffer -bang Bonly
-      \ :call BufOnly('<args>', '<bang>')
-command! -nargs=? -complete=buffer -bang BOnly
-      \ :call BufOnly('<args>', '<bang>')
-command! -nargs=? -complete=buffer -bang Bufonly
-      \ :call BufOnly('<args>', '<bang>')
-command! -nargs=? -complete=buffer -bang BufOnly
-      \ :call BufOnly('<args>', '<bang>')
+  command! -nargs=? -complete=buffer -bang Bonly
+        \ :call BufOnly('<args>', '<bang>')
+  command! -nargs=? -complete=buffer -bang BOnly
+        \ :call BufOnly('<args>', '<bang>')
+  command! -nargs=? -complete=buffer -bang Bufonly
+        \ :call BufOnly('<args>', '<bang>')
+  command! -nargs=? -complete=buffer -bang BufOnly
+        \ :call BufOnly('<args>', '<bang>')
 
-function! BufOnly(buffer, bang)
-  if a:buffer == ''
-    " No buffer provided, use the current buffer.
-    let buffer = bufnr('%')
-  elseif (a:buffer + 0) > 0
-    " A buffer number was provided.
-    let buffer = bufnr(a:buffer + 0)
-  else
-    " A buffer name was provided.
-    let buffer = bufnr(a:buffer)
-  endif
+  function! BufOnly(buffer, bang)
+    if a:buffer == ''
+      " No buffer provided, use the current buffer.
+      let buffer = bufnr('%')
+    elseif (a:buffer + 0) > 0
+      " A buffer number was provided.
+      let buffer = bufnr(a:buffer + 0)
+    else
+      " A buffer name was provided.
+      let buffer = bufnr(a:buffer)
+    endif
 
-  if buffer == -1
-    echohl ErrorMsg
-    echomsg "No matching buffer for" a:buffer
-    echohl None
-    return
-  endif
+    if buffer == -1
+      echohl ErrorMsg
+      echomsg "No matching buffer for" a:buffer
+      echohl None
+      return
+    endif
 
-  let last_buffer = bufnr('$')
+    let last_buffer = bufnr('$')
 
-  let delete_count = 0
-  let n = 1
-  while n <= last_buffer
-    if n != buffer && buflisted(n)
-      if a:bang == '' && getbufvar(n, '&modified')
-        echohl ErrorMsg
-        echomsg 'No write since last change for buffer'
-              \ n '(add ! to override)'
-        echohl None
-      else
-        silent exe 'bdel' . a:bang . ' ' . n
-        if ! buflisted(n)
-          let delete_count = delete_count+1
+    let delete_count = 0
+    let n = 1
+    while n <= last_buffer
+      if n != buffer && buflisted(n)
+        if a:bang == '' && getbufvar(n, '&modified')
+          echohl ErrorMsg
+          echomsg 'No write since last change for buffer'
+                \ n '(add ! to override)'
+          echohl None
+        else
+          silent exe 'bdel' . a:bang . ' ' . n
+          if ! buflisted(n)
+            let delete_count = delete_count+1
+          endif
         endif
       endif
+      let n = n+1
+    endwhile
+
+    if delete_count == 1
+      echomsg delete_count "buffer deleted"
+    elseif delete_count > 1
+      echomsg delete_count "buffers deleted"
     endif
-    let n = n+1
-  endwhile
 
-  if delete_count == 1
-    echomsg delete_count "buffer deleted"
-  elseif delete_count > 1
-    echomsg delete_count "buffers deleted"
-  endif
-
-endfunction
-"}}}
+  endfunction
+  "}}}

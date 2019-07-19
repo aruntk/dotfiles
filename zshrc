@@ -108,6 +108,7 @@ export USE_GLOBAL_ADK=t
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 ### =========== My Aliases =============== ###
 alias dcount="figlet $(ls ~/Downloads/ | wc -l)"
+alias betty="/Users/tkay/Public/betty/main.rb"
 if [ -f ~/.aliases ]; then
 . ~/.aliases
 fi
