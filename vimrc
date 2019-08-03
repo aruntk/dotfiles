@@ -160,6 +160,7 @@ else
   set background=dark " Set dark background
 endif
 
+
 " Highlight searches
 "set hlsearch
 " Ignore case of searches

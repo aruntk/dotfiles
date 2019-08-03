@@ -1,7 +1,5 @@
-#disable tap drag select.. drives me crazy
-gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag false
-
-git config --global core.editor "nvim"
+#install git
+sudo pacman -S git
 
 mkdir -p ~/.config/nvim
 ln -s vimrc ~/.config/nvim/init.vim
@@ -16,6 +14,12 @@ sudo pacman -S xsel
 sudo pacman -S xclip
 mkdir -p ~/.vim/undo
 mkdir -p ~/.vim/backups
+
+#disable tap drag select.. drives me crazy
+gsettings set org.gnome.desktop.peripherals.touchpad tap-and-drag false
+
+git config --global core.editor "nvim"
+
 
 #ZSH config
 ln -s zshrc ~/.zshrc
