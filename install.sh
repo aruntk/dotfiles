@@ -45,3 +45,8 @@ ln -s tmux.conf  ~/.tmux.conf
 sudo pacman -S tmux
 mkdir -p ~/.tmux/plugins/
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+#Nerd Font
+
+cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+echo "select DroidSansMono Nerd Font Book 11 as gnome terminal font"
