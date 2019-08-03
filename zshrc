@@ -1,11 +1,11 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/tkay/.oh-my-zsh
+export ZSH=/home/tkay/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="dracula"
+ZSH_THEME="agnoster"
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -67,8 +67,8 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 source $ZSH/oh-my-zsh.sh
 
 export PATH="$HOME/.node/bin:$PATH"
-#export PATH="$PATH:/Users/tkay/coding/android/sdk/android-sdk-macosx/platform-tools"
-#export PATH="$PATH:/Users/tkay/coding/android/sdk/android-sdk-macosx/tools"
+#export PATH="$PATH:/home/tkay/coding/android/sdk/android-sdk-macosx/platform-tools"
+#export PATH="$PATH:/home/tkay/coding/android/sdk/android-sdk-macosx/tools"
 #export PATH="/usr/local/mysql/bin:$PATH"
 
 #append sensitive info from ~/.sensitive
@@ -79,7 +79,7 @@ fi
 
 #for android
 export USE_GLOBAL_ADK=t
-#export ANDROID_HOME="/Users/tkay/coding/android/sdk/android-sdk-macosx/"
+#export ANDROID_HOME="/home/tkay/coding/android/sdk/android-sdk-macosx/"
 
 # You may need to manually set your language environment
  export LC_ALL=en_US.UTF-8
@@ -108,7 +108,7 @@ export USE_GLOBAL_ADK=t
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 ### =========== My Aliases =============== ###
 alias dcount="figlet $(ls ~/Downloads/ | wc -l)"
-alias betty="/Users/tkay/Public/betty/main.rb"
+alias betty="/home/tkay/Public/betty/main.rb"
 if [ -f ~/.aliases ]; then
 . ~/.aliases
 fi
