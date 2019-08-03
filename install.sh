@@ -33,5 +33,6 @@ rm -rf gnome-terminal-colors-dracula
 
 #Tmux config
 ln -s tmux.conf  ~/.tmux.conf
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 sudo pacman -S tmux
+mkdir -p ~/.tmux/plugins/
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
