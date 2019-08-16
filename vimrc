@@ -125,7 +125,7 @@ call plug#end() "required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 " Defaults + Colors and stuff {{{
-set clipboard=unnamed
+set clipboard=unnamedplus
 set noshowmode " Don't show the current mode (airline.vim takes care of us)
 set ruler " Show the cursor position
 set scrolloff=3 " Start scrolling three lines before horizontal border of window
