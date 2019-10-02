@@ -25,6 +25,7 @@ Plug 'scrooloose/nerdtree'
 "Plug 'bagrat/vim-workspace'
 "Plug 'tpope/vim-vinegar'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'aufgang001/vim-nerdtree_plugin_open'
 
 "search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -185,6 +186,7 @@ map <C-n> :NERDTreeToggle<CR>
 
 let NERDTreeShowHidden=1
 let NERDTreeIgnore = ['\.sw']
+let g:nerdtree_plugin_open_cmd = 'xdg-open'
 " }}}
 "
 "NerdCommenter {{{
