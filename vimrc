@@ -60,7 +60,7 @@ Plug 'lilydjwg/colorizer'
 Plug 'pangloss/vim-javascript'
 " Plug 'isRuslan/vim-es6'
 Plug 'herringtondarkholme/yats.vim'
-Plug 'Shougo/deoplete.nvim'
+"Plug 'Shougo/deoplete.nvim'
 "Plug 'tasn/vim-tsx'
 "Plug 'mhartington/nvim-typescript', {'do': 'sh install.sh'}
 "Plug 'leafgarland/typescript-vim', {'for': ['typescript', 'typescriptreact']}
@@ -659,8 +659,8 @@ augroup general_config
   "autocmd FileType javascript,css,php set textwidth=79
   "}}}
   " deoplete autocomplete
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#num_processes = 1
+  "let g:deoplete#enable_at_startup = 1
+  "let g:deoplete#num_processes = 1
 
   " Strip trailing whitespace (,ss) {{{
   function! StripWhitespace () " {{{
