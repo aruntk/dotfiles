@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/tkay/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -108,7 +108,7 @@ export USE_GLOBAL_ADK=t
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 ### =========== My Aliases =============== ###
 alias dcount="figlet $(ls ~/Downloads/ | wc -l)"
-alias betty="/Users/tkay/Public/betty/main.rb"
+alias betty="$HOME/Public/betty/main.rb"
 if [ -f ~/.aliases ]; then
 . ~/.aliases
 fi
@@ -117,3 +117,6 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 
 export PATH="$HOME/.yarn/bin:$PATH"
+
+## default env variables
+export JAVA_HOME=$(/usr/libexec/java_home)

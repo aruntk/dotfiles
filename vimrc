@@ -105,8 +105,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 "color schemes
-Plug 'altercation/vim-colors-solarized'
-"Plug 'dracula/vim', { 'as': 'dracula' }
+"Plug 'altercation/vim-colors-solarized'
+Plug 'dracula/vim', { 'as': 'dracula' }
 " Plug 'joshdick/onedark.vim'
 "glyph
 Plug 'ryanoasis/vim-devicons'
@@ -151,11 +151,11 @@ set wildignore+=.DS_Store
 " Other wise, a lighter theme will be chosen.
 let cur_hour = str2nr(strftime("%H", localtime()))
 if cur_hour > 18 || cur_hour < 8
-  colorscheme solarized " Set color scheme
+  colorscheme dracula " Set color scheme
   set background=dark " Set dark background
   "let g:evervim_airline_theme="dracula"
 else
-  colorscheme solarized " Set color scheme
+  colorscheme dracula " Set color scheme
   "let g:evervim_airline_theme="dracula"
   set background=dark " Set dark background
 endif
