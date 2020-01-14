@@ -28,12 +28,18 @@ git clone https://github.com/dracula/iterm.git
 echo "change iterm colors to dracula"
 cd
 
+echo "setting up neovim"
 brew install cmake macvim
 brew install neovim
 mkdir -p ~/.config/nvim/
 ln -s ~/personal/dotfiles/vimrc ~/.config/nvim/init.vim
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \\
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+mkdir -p ~/.vim/backups
+mkdir -p ~/.vim/undo
+mkdir -p ~/.vim/swaps
 nvim -c PlugInstall -c q
 cd ~/.local/share/nvim/plugged/youcompleteme
 ./install.py --java-completer --ts-completer
+
+echo "voilaaa..."
