@@ -22,15 +22,15 @@ else
 fi
 
 # Install Python 3 (now comes with pip by default)
-brew install python3
+# brew install python3
 
 # Install thefuck (now available via brew)
-brew install thefuck
+# brew install thefuck
 
 echo "🐚 Setting up Zsh (default shell since macOS Catalina)..."
 
 # Zsh is now the default shell, but install latest version via brew
-brew install zsh
+# brew install zsh
 
 # Install Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
